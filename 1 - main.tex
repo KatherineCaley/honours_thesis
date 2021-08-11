@@ -1,0 +1,77 @@
+\documentclass[12pt,a4paper, twoside,]{report}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage[dvipsnames]{xcolor}
+\renewcommand{\thepage}{\roman{page}}	
+
+\title{Thesis Draft 1}
+\author{Katherine Caley}
+\date{July 2021}
+
+% margins
+\usepackage[a4paper,left=2cm,right=2cm,top=2cm,bottom=2cm,bindingoffset=1cm]{geometry}
+
+% control bolding in table of contents 
+\usepackage[titles]{tocloft}
+
+% for formatting chapter titles
+\usepackage{titlesec}
+
+% chapters
+\titleformat{\chapter}[display]{\Huge}{\color{MidnightBlue}\raggedleft{Chapter \thechapter}}{10pt}{\titlerule}
+
+
+% referencing
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks,
+    linktocpage=True,
+    linkcolor=MidnightBlue,
+    citecolor=Periwinkle,      
+    urlcolor=BlueViolet,
+}
+
+
+% spacing 
+\usepackage{setspace}
+\doublespacing
+
+% glossaries 
+\usepackage[acronym]{glossaries}
+\input{glossary}
+
+\begin{document}
+
+\maketitle
+
+\newpage
+
+\input{2 - abstract}
+
+\newpage
+
+\tableofcontents
+
+\newpage
+
+\printglossaries
+
+\newpage
+
+\renewcommand{\thepage}{\arabic{page}}	
+
+\input{3 - introduction}
+\newpage
+
+\input{4 - methods}
+\newpage
+
+\input{5 - Test for Disequilibrium}
+
+\input{6 - Quantifying Disequilibrium}
+
+\input{7 - results}
+
+\input{8 - discussion}
+
+\end{document}
