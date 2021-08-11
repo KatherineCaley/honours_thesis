@@ -26,9 +26,9 @@ It is necessary to determine how my methods are affected by the length of the al
 
 It is also necessary to determine the influence of increased branch length. When simulating alignments, I can alter the branch lengths of the generating function. This is a capability that allows me to create synthetic alignments specified by the same process (same $\mathrm{Q}$), but with an increased term of divergence. To address how branch length affects the test, I simulated data sets with an increased branch length for all four seeds. The genetic distance ($d$) (or branch length) is a measure of the expected number of nucleotide substitutions per site. The maximum branch length in my application data sets will be about $d=0.6$. For the long branch simulations, I scaled the tree by a factor of 3. However, branch lengths were capped at $d=0.6$ and the remaining branch lengths were reduced proportionally. 
 
-Each simulation set consisted of 1,000 synthetic alignments. The synthetic alignments are generated from the same function, derived from the parameter estimates from one seed alignment. The simulation process that was performed is described in Figure \ref{fig:seq2sim}. 
+Each simulation set consisted of 1,000 synthetic alignments. The synthetic alignments are generated from the same function, derived from the parameter estimates from one seed alignment. The simulation process that was performed is described in Figure \ref{fig:simulating_alns}.
 
-
+\input{figures/simulating_alns}
 
 \section{Bootstrapping Data}
 
