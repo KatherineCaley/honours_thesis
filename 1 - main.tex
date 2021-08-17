@@ -20,8 +20,8 @@
 % chapters
 \titleformat{\chapter}[display]{\Huge}{\color{MidnightBlue}\raggedleft{Chapter \thechapter}}{10pt}{\titlerule}
 
-
-% referencing
+% referencing   
+\usepackage{nameref}
 \usepackage{hyperref}
 \hypersetup{
     colorlinks,
@@ -30,6 +30,7 @@
     citecolor=Periwinkle,      
     urlcolor=BlueViolet,
 }
+
 
 
 % spacing 
@@ -73,5 +74,8 @@
 \input{7 - results}
 
 \input{8 - discussion}
+
+\bibliographystyle{apalike}
+\bibliography{references}
 
 \end{document}
