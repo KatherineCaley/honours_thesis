@@ -11,6 +11,10 @@
 % margins
 \usepackage[a4paper,left=2cm,right=2cm,top=2cm,bottom=2cm,bindingoffset=1cm]{geometry}
 
+% spacing 
+\usepackage{setspace}
+\doublespacing
+
 % control bolding in table of contents 
 \usepackage[titles]{tocloft}
 
@@ -31,12 +35,6 @@
     urlcolor=BlueViolet,
 }
 
-
-
-% spacing 
-\usepackage{setspace}
-\doublespacing
-
 % glossaries 
 \usepackage[acronym]{glossaries}
 \input{glossary}
@@ -52,6 +50,10 @@
 \newpage
 
 \tableofcontents
+
+\newpage
+
+% \listoffigures
 
 \newpage
 
@@ -74,6 +76,9 @@
 \input{7 - results}
 
 \input{8 - discussion}
+
+\input{appendices}
+
 
 \bibliographystyle{apalike}
 \bibliography{references}
