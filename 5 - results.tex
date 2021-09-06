@@ -1,23 +1,21 @@
 \chapter{Results}
 
-The aim of the methods described in this thesis are to provide tools to query the disequilibrium of sequence evolution. 
-
-
+The aim of the methods described in this thesis are to provide tools to query the disequilibrium of sequence evolution. Described in this chapter are the characterisation of three novel methods to describe disequilibrium. Following this I present their application to three biological applications. 
+x
 \section{Quantifying Disequilibrium}
+Three different measures of disequilibrium are described below. 
 
-
-\section{$T_{50}$}
+\subsection{$T_{50}$}
 A natural way to describe disequilibrium in a system is by its proximity to equilibrium. For a process in disequilibrium, as time goes to infinity, it will converge to $\pi_\infty$, its equilibrium distribution. This can be expressed mathematically as $\pi_\infty = \lim_{t \to \infty}\pi \cdot e^{\mathbf{Q}t}.$ ${T_{50}}$ is a measure of the distance to halfway to $\pi_\infty$, measured in terms of the expected number of substitutions. The code to perform $T_{50}$ was written using Python.
 
 
-\section{Convergence}
+\subsection{Convergence}
 
-$$\frac{\partial \pi}{\partial t}$$
+$$\nabla =x \frac{\partial \pi}{\partial t}$$
 
-\section{Equivalence of Process}
+\subsection{Equivalence of Process}
 
-
-\section{Synthetic Data}
+\section{Simulation Study}
 
 \subsection{Test for Disequilibrium}
 
@@ -40,22 +38,26 @@ Figure \ref{fig:synthetic/lrt/197113-long_branch} shows that increasing the bran
 Squartini and Arndt 
 
 
-\input{figures/plots/synthetic/chi2/197113_332182_17210}
+% \input{figures/plots/synthetic/chi2/197113_332182_17210}
 
 \subsection{$T_{50}$}
 
-\input{figures/plots/synthetic/T50/300bp}
+% \input{figures/plots/synthetic/T50/300bp}
 
-\input{figures/plots/synthetic/T50/197113_332182_17210-seq_len}
+% \input{figures/plots/synthetic/T50/197113_332182_17210-seq_len}
 
 \subsection{Convergence}
 
-\input{figures/plots/synthetic/convergence/300bp}
+% \input{figures/plots/synthetic/convergence/300bp}
 
 \subsection{Equivalence of Process}
 
 \section{Is the Human Genome at Equilibrium?}
 
-\section{Is the \textit{D. melanogaster} genome further from equilibrium than \textit{D. simulans}?}
+The resolution of the LRT $p$ values is too low for conventional methods of multiple test corrections. The simulation results revealed that under the theoretical distribution the $p$ values are not uniformly distributed. As a result, they are unsuitable for assessing significance. A method for assessing significance in this case is with a parametric bootstrap. The compute time for a bootstrap with a single replicate is ${\sim} 6$ seconds. For each of the Primate data sets there are ${\sim} 1,300$ alignments. In order to satisfy the Bonferroni correction for $1,300$ alignments you would need to, with some level of precision, be able to estimate $p$ values below the altered significance threshold, $0.05/1,300 = 3.85{\times}10^{-5}$. For it to be possible to reject the null requires generating greater than $3.85{\times}10^{5}$ replicates per alignment. This would take $642$ hours per alignment, of which there are $2,600$. This is a prohibitive level of computation that is both impractical, and unnecessary. 
 
+I have established an alternate strategy which takes advantage of the shape of the distribution. The challenge of correcting for multiple tests is pronounced in the space of genomics, for which \cite{Storey2003StatisticalStudies} introduced a formal procedure for estimating the false discovery rate. In their case, they produce an alternate statistic to be interpreted for an individual result, which isn't applicable here due to the low resolution of $p$ values. However, their procedure included an estimation of the fraction of an analysis which is consistent with the null hypothesis. This method takes advantage of how the $p$ values of data that is consistent with the null will be uniformly distributed, illustrated in Figure 1 of \cite{Storey2003StatisticalStudies}. Fitting a cubic spline to determine the inflection point, one can estimate the proportion of a given distribution that is uniform consistent with the null hypothesis, denoted $\hat \pi_{0}$. Of interest to this analysis is $1 -\hat \pi_{0}$, the proportion that is not consistent with the null hypothesis. The code to produce $\hat \pi_{0}$ is included in the appendices. 
+
+\section{Is the \textit{D. melanogaster} genome further from equilibrium than \textit{D. simulans}?}
+ 
 \section{Is the half of \textit{Fxy} located in the Psuedo-Autosomal Region (PAR) further from equilibrium than the non-PAR half in \textit{M. musculus}?}
