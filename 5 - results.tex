@@ -1,7 +1,7 @@
 \chapter{Results}
 
-The aim of the methods described in this thesis are to provide tools to query the disequilibrium of sequence evolution. Described in this chapter are the characterisation of three novel methods to describe disequilibrium. Following this I present their application to three biological applications. 
-x
+The aim of the methods described in this thesis is to provide tools to query the disequilibrium of sequence evolution. Described in this chapter is the characterisation of three novel methods to describe disequilibrium. Following this, I present their application to three biological applications. 
+
 \section{Quantifying Disequilibrium}
 Three different measures of disequilibrium are described below. 
 
@@ -11,17 +11,43 @@ A natural way to describe disequilibrium in a system is by its proximity to equi
 
 \subsection{Convergence}
 
-$$\nabla =x \frac{\partial \pi}{\partial t}$$
+Calculate the rate of change of pi at time t:
+
+$$\pi_0 * Q * e^{Qt}$$
+
+
+
+
+take the length of the returned vector
+
+$$\nabla = \frac{\partial \pi}{\partial t}$$
+
+f
+$ \hat z_{\nabla}$
 
 \subsection{Equivalence of Process}
 
+For a single alignment of three taxa, a split continuous- and discrete-time model can be specified by the following set of parameters: $( \bm{Q}_{fg}, \bm{P}_{bg1}, \bm{P}_{bg2}, \pi_{0}, b ) $ where $\bm{Q}_{fg}$ is a continuous-time rate matrix describing the foreground edge,  $\bm{P}_{bg1}$ and $\bm{P}_{bg2}$ are discrete-time probability substitution matrices each describing one of the background edges, $\pi_{0}$ is the motif probabilities in the most recent common ancestor, and $b$ is the branch length corresponding to the foreground edge. 
+
+For the adjacent Equivalence of Process test (aEOP) between two alignment $\alpha$ and $\beta$, the null hypothesis constrains both alignments to have the same root motif probabilities and the same rate matrix on the foreground edge, i.e.,  \\
+$H_0:$ $\bm{Q}_{fg}(\alpha) = \bm{Q}_{fg}(\beta)$ and $\pi_0(\beta) = \pi_0(\alpha)$. \\
+\noindent
+The alternate hypothesis allows all parameters to be independent between alignments. 
+
+The temporal Equivalence of Process test (tEOP) is between two edges of the same aligned sequence. In this case, there are two edges of interest, so the process is modelled with all edges as continuous time process. Such a model is specified by the following set of parameters: $( \bm{Q}_{fg1}, \bm{Q}_{fg2}, \bm{Q}_{bg}, \pi_{0}, b_{fg1}, b_{fg2}, b_{bg1}) $, where $\bm{Q}_{fg1}$ and $\bm{Q}_{fg2}$ are continuous-time rate matrices each describing on of the foreground edges,  $\bm{Q}_{bg}$ is a continuous-time rate matrix describing the background edge, $\pi_{0}$ is the motif probabilities in the most recent common ancestor, and $ b_{fg1}, b_{fg2}, b_{fg1}$ is the branch length corresponding to the foreground edge. The null hypothesis constrains both foreground edges to have the same rate matrix, i.e., \\
+$H_0:$ $\bm{Q}_{fg1} = \bm{Q}_{fg2}$  \\ 
+The alternate hypothesis allows all parameters to be independent. 
+
+
 \section{Simulation Study}
+In order to examine the properties of the measures on data in which the state of the data is known, I performed a simulation study. 
+
 
 \subsection{Test for Disequilibrium}
 
  
 
-To determine whether a given LRT statistic is significant requires establishing the appropriate null distribution. Statistical theory states that under certain conditions, the LRT statistic will be $\chi^2_{df}$ distributed with degrees freedom (df) equal to the difference in the number of free parameter between the models. In which case, one can obtain the p-values for a given LRT statistic simply from the analytical distribution. However, the behaviour of my test with real finite data is unknown. When considering the use of mixed discrete- and continuous-time Markov process is a deviation from convention, it is especially important to establish whether the test statistic is consistent with theoretical expectations. 
+To determine whether a given LRT statistic is significant requires establishing the appropriate null distribution. Statistical theory states that under certain conditions, the LRT statistic will be $\chi^2_{df}$ distributed with degrees freedom (df) equal to the difference in the number of free parameters between the models. In which case, one can obtain the p-values for a given LRT statistic simply from the analytical distribution. However, the behaviour of my test with real finite data is unknown. When considering the use of mixed discrete- and continuous-time Markov process is a deviation from convention, it is especially important to establish whether the test statistic is consistent with theoretical expectations. 
 
 The distribution is closer to theoretical expectations for longer sequences, depicted in Figure \ref{fig:synthetic/lrt/197113-long_seq}. For alignments of length 300bp, shown in Figure \ref{fig:synthetic/lrt/197113-long_seq}a, the distribution of LRT statistic yields an excess of small p-values. Consequently, the data points of the Quantile-Quantile plot fall well below the diagonal line. Owing to increasing the power of the test, the distribution of p-values for longer alignments, illustrated in Figure \ref{fig:synthetic/lrt/197113-long_seq}b, is less skewed. Overall, the data points fall much closer to the diagonal line. It is worth noting that consistency with the theoretical distribution is most important for the smaller p-values. In Figure \ref{fig:synthetic/lrt/197113-long_seq}b, for quantiles corresponding to a significant test statistic (i.e. the bottom left corner where $p<0.05$), the distribution is very close to the theoretical distribution. This means that the chance of a false-positive is more or less in line with statistical expectations (5\%). Now, consider the distribution of p-values for $p>0.05$. Even though the distribution is not uniform, using the $\chi^{2}$ distribution, a non-significant result would still yield a non-significant p-value (true-negative). Thus, for some longer alignments, it may be suitable to assume the LRT statistics are $\chi^{2}$ distributed and in turn, obtain the p-value simply from analytical distribution. 
 
@@ -54,9 +80,12 @@ Squartini and Arndt
 
 \section{Is the Human Genome at Equilibrium?}
 
-The resolution of the LRT $p$ values is too low for conventional methods of multiple test corrections. The simulation results revealed that under the theoretical distribution the $p$ values are not uniformly distributed. As a result, they are unsuitable for assessing significance. A method for assessing significance in this case is with a parametric bootstrap. The compute time for a bootstrap with a single replicate is ${\sim} 6$ seconds. For each of the Primate data sets there are ${\sim} 1,300$ alignments. In order to satisfy the Bonferroni correction for $1,300$ alignments you would need to, with some level of precision, be able to estimate $p$ values below the altered significance threshold, $0.05/1,300 = 3.85{\times}10^{-5}$. For it to be possible to reject the null requires generating greater than $3.85{\times}10^{5}$ replicates per alignment. This would take $642$ hours per alignment, of which there are $2,600$. This is a prohibitive level of computation that is both impractical, and unnecessary. 
+The resolution of the LRT $p$ values is too low for conventional methods of multiple test corrections. The simulation results revealed that under the theoretical distribution the $p$ values are not uniformly distributed. As a result, they are unsuitable for assessing significance. A method for assessing significance, in this case, is with a parametric bootstrap. The compute time for a bootstrap with a single replicate is ${\sim} 6$ seconds. For each of the Primate data sets there are ${\sim} 1,300$ alignments. In order to satisfy the Bonferroni correction for $1,300$ alignments you would need to, with some level of precision, be able to estimate $p$ values below the altered significance threshold, $0.05/1,300 = 3.85{\times}10^{-5}$. For it to be possible to reject the null requires generating greater than $3.85{\times}10^{5}$ replicates per alignment. This would take $642$ hours per alignment, of which there are $2,600$. This is a prohibitive level of computation that is both impractical, and unnecessary. 
 
-I have established an alternate strategy which takes advantage of the shape of the distribution. The challenge of correcting for multiple tests is pronounced in the space of genomics, for which \cite{Storey2003StatisticalStudies} introduced a formal procedure for estimating the false discovery rate. In their case, they produce an alternate statistic to be interpreted for an individual result, which isn't applicable here due to the low resolution of $p$ values. However, their procedure included an estimation of the fraction of an analysis which is consistent with the null hypothesis. This method takes advantage of how the $p$ values of data that is consistent with the null will be uniformly distributed, illustrated in Figure 1 of \cite{Storey2003StatisticalStudies}. Fitting a cubic spline to determine the inflection point, one can estimate the proportion of a given distribution that is uniform consistent with the null hypothesis, denoted $\hat \pi_{0}$. Of interest to this analysis is $1 -\hat \pi_{0}$, the proportion that is not consistent with the null hypothesis. The code to produce $\hat \pi_{0}$ is included in the appendices. 
+I have established an alternate strategy that takes advantage of the shape of the distribution. The challenge of correcting for multiple tests is pronounced in the space of genomics, for which \cite{Storey2003StatisticalStudies} introduced a formal procedure for estimating the false discovery rate. In their case, they produce an alternate statistic to be interpreted for an individual result, which isn't applicable here due to the low resolution of $p$ values. However, their procedure included an estimation of the fraction of an analysis which is consistent with the null hypothesis. This method takes advantage of how the $p$ values of data that is consistent with the null will be uniformly distributed, illustrated in Figure 1 of \cite{Storey2003StatisticalStudies}. Fitting a cubic spline to determine the inflection point, one can estimate the proportion of a given distribution that is uniform consistent with the null hypothesis, denoted $\hat \pi_{0}$. Of interest to this analysis is $1 -\hat \pi_{0}$, the proportion that is not consistent with the null hypothesis. The code to produce $\hat \pi_{0}$ is included in the appendices. 
+
+Rates of evolution in introns and exons. If the null was true, and the branch length was the same between introns and exons, then the distribution of the difference would be centered on zero. Try a T-test of the null that the mean is zero, against the prior alternate that the exons are evolving slower, and so the mean is greater than zero. The assumption of the T-test is that the distribution is normal, which is hard to say in this case. The T-test is pretty robust, but I can test for whether it is normally distributed also. 
+
 
 \section{Is the \textit{D. melanogaster} genome further from equilibrium than \textit{D. simulans}?}
  
