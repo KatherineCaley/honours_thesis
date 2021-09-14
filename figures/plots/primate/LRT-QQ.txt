@@ -1,6 +1,0 @@
-\begin{figure}[h]]
-\centering
-\includegraphics[width=	extwidth]{/Users/katherine/repos/Thesis-Draft-1-KC/figures/plots/primate/LRT-QQ.pdf}
-\caption{}
-\label{fig:primate_lrt_qq}
-\end{figure}
