@@ -11,6 +11,23 @@
 % margins
 \usepackage[a4paper,left=2cm,right=2cm,top=2cm,bottom=2cm]{geometry}
 
+% related to displaying code
+\usepackage{algorithm}
+\usepackage{minted}
+\usemintedstyle{perldoc}
+
+\usepackage{xcolor} 
+
+% tables
+\usepackage{tabularx}
+
+% wrapping figures 
+\usepackage{wrapfig}
+
+% check marks 
+\usepackage{tikz}
+\def\checkmark{\tikz\fill[scale=0.4](0,.35) -- (.25,0) -- (1,.7) -- (.25,.15) -- cycle;} 
+
 % maths
 \usepackage{amsmath}
 \usepackage{amssymb}
@@ -21,6 +38,7 @@
 \usepackage{setspace}
 \doublespacing
 
+
 % control bolding in table of contents 
 \usepackage[titles]{tocloft}
 
@@ -29,6 +47,12 @@
 
 % chapters
 \titleformat{\chapter}[display]{\Huge}{\color{MidnightBlue}\raggedleft{Chapter \thechapter}}{10pt}{\titlerule}
+
+
+% reference
+\usepackage{natbib}
+% \setcitestyle{authoryear, round}
+% \bibliographystyle{apalike}
 
 % referencing   
 \usepackage{nameref}
@@ -46,7 +70,7 @@
 \input{glossary}
 
 \begin{document}
-
+%TC:ignore
 \maketitle
 
 \newpage
@@ -72,16 +96,22 @@
 \input{3 - introduction}
 \newpage
 
+
 \input{4 - methods}
+
 \newpage
-
+%TC:endignore
 \input{5 - results}
-
+%TC:ignore
 \input{6 - discussion}
+%TC:endignore
 
+%TC:ignore
 \input{appendices}
 
-\bibliographystyle{apalike}
-\bibliography{references}
 
+\bibliographystyle{geneticsstyle}
+\addcontentsline{toc}{chapter}{Bibliography}
+\bibliography{references}
+%TC:endignore
 \end{document}

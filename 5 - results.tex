@@ -1,100 +1,58 @@
 \chapter{Results}
 
-The aim of the methods described in this thesis is to provide tools to query the disequilibrium of sequence evolution. Described in this chapter is the characterisation of three novel methods to describe disequilibrium. Following this, I present their application to three biological applications. 
+The aim of the methods described in this thesis is to provide tools to query the disequilibrium of sequence evolution. Described in this chapter is the characterisation of the developed methods. I present the application of the test of existence, and test of consistency to simulated data. Additionally, I present two new statistics for measuring the magnitude of disequilibrium. I evaluate these statistics on simulated data. I complement this with the results of the methods applied to empirical data where I expect disequilibrium to exist.
 
-\section{Quantifying Disequilibrium}
-Three different measures of disequilibrium are described below. 
+\section*{Developing and validating the methods}
 
-\subsection{$T_{50}$}
-A natural way to describe disequilibrium in a system is by its proximity to equilibrium. For a process in disequilibrium, as time goes to infinity, it will converge to $\pi_\infty$, its equilibrium distribution. This can be expressed mathematically as $\pi_\infty = \lim_{t \to \infty}\pi \cdot e^{\mathbf{Q}t}.$ ${T_{50}}$ is a measure of the distance to halfway to $\pi_\infty$, measured in terms of the expected number of substitutions. The code to perform $T_{50}$ was written using Python.
+A process of validation was applied to each method. A simple specification of methods is not enough, it is necessary to determine how it behaves and that it behaves in a way that matches up with the expectation when how the data is generated is known. There is an infinite number of way in which things can be out of equilibrium, but the number of ways in which they can be in equilibrium is a lot more restrictive. Since I am interested in departures from being in equilibrium, that’s the condition set that I have imposed in developing the methods. Below I describe the intent of a particular statistic, then describe the way in which it was developed.
 
+\subsection*{The LRT for Existence with parametric bootstrapping provided a robust estimation of significance}
 
-\subsection{Convergence}
+The test of existence seeks to determine whether the process is described significantly better by a non-stationary process. Formally, it is a LRT between the following hypotheses:\\ $\mathbf{H_0}$: the foreground evolved according to the \textbf{GNS}, the background according to BH. \\ $\mathbf{H_1}$: the foreground evolved according to the \textbf{GN}, the background according to BH.\\
+Here I report the best methods of model fitting and the behaviour of the test in simulated data. 
 
-Calculate the rate of change of pi at time t:
+It is important that the best possible methods of model fitting are chosen. A necessary precursor to any application of the test is to establish maximal fits of the models. Additionally, the process of fitting a model to an alignment is the most time-consuming method routinely used in my project. I have sought to identify the quickest possible method that yields a maximised likelihood. 
 
-$$\pi_0 * Q * e^{Qt}$$
+For this, I conducted an initialisation experiment that makes use of a property of nested models. For nested models, it is guaranteed that the likelihood for the alternate will be greater or equal to that for the null. General Time-Reversible (GTR) is the most general time-reversible process, and is required for my initialisation experiment. GTR is nested in GNS, which in turn is nested in GN. When a model is not maximally fit, the optimisation methods have failed to find the global maximum. Such is referred to as a local maximum, where they are higher points elsewhere but not nearby. In such cases, getting parameter estimates from a nested model fit to use as initial estimates may aid the optimisation in escaping a local maximum. I also wish to establish whether there is a speed gain in initialised model fits compared to uninitialised fits. Theoretically, if given starting values close to the optimal, this may reduce the time it takes to get there. 
 
+For all synthetic data sets, I tested whether initialisation improved the model fitting process. The initialised method fit models in order of increasing generality (GTR, GNS, GN). Importantly, parameter estimates for each model were obtained from the previous model. The uninitialised method fit GNS and GN separately. The maximum likelihood estimates between uninitialised and initialised fits were compared for the models (e.g., uninitialised GN vs initialised GN). The time taken for each fitting process was recorded.  
 
-
-
-take the length of the returned vector
-
-$$\nabla = \frac{\partial \pi}{\partial t}$$
-
-f
-$ \hat z_{\nabla}$
-
-\subsection{Equivalence of Process}
-
-For a single alignment of three taxa, a split continuous- and discrete-time model can be specified by the following set of parameters: $( \bm{Q}_{fg}, \bm{P}_{bg1}, \bm{P}_{bg2}, \pi_{0}, b ) $ where $\bm{Q}_{fg}$ is a continuous-time rate matrix describing the foreground edge,  $\bm{P}_{bg1}$ and $\bm{P}_{bg2}$ are discrete-time probability substitution matrices each describing one of the background edges, $\pi_{0}$ is the motif probabilities in the most recent common ancestor, and $b$ is the branch length corresponding to the foreground edge. 
-
-For the adjacent Equivalence of Process test (aEOP) between two alignment $\alpha$ and $\beta$, the null hypothesis constrains both alignments to have the same root motif probabilities and the same rate matrix on the foreground edge, i.e.,  \\
-$H_0:$ $\bm{Q}_{fg}(\alpha) = \bm{Q}_{fg}(\beta)$ and $\pi_0(\beta) = \pi_0(\alpha)$. \\
-\noindent
-The alternate hypothesis allows all parameters to be independent between alignments. 
-
-The temporal Equivalence of Process test (tEOP) is between two edges of the same aligned sequence. In this case, there are two edges of interest, so the process is modelled with all edges as continuous time process. Such a model is specified by the following set of parameters: $( \bm{Q}_{fg1}, \bm{Q}_{fg2}, \bm{Q}_{bg}, \pi_{0}, b_{fg1}, b_{fg2}, b_{bg1}) $, where $\bm{Q}_{fg1}$ and $\bm{Q}_{fg2}$ are continuous-time rate matrices each describing on of the foreground edges,  $\bm{Q}_{bg}$ is a continuous-time rate matrix describing the background edge, $\pi_{0}$ is the motif probabilities in the most recent common ancestor, and $ b_{fg1}, b_{fg2}, b_{fg1}$ is the branch length corresponding to the foreground edge. The null hypothesis constrains both foreground edges to have the same rate matrix, i.e., \\
-$H_0:$ $\bm{Q}_{fg1} = \bm{Q}_{fg2}$  \\ 
-The alternate hypothesis allows all parameters to be independent. 
-
-
-\section{Simulation Study}
-In order to examine the properties of the measures on data in which the state of the data is known, I performed a simulation study. 
-
-
-\subsection{Test for Disequilibrium}
-
- 
+The initialisation experiment revealed that there are no intrinsic problems with the fitting process for GN or GNS. A fit was considered non-maximal if the log-likelihood from the initialised method was higher than that of the uninitialised method. There were no occurrences of non-maximal fits for any of the synthetic alignments. Initialised fits which were faster than the corresponding uninitialised fits were rare, occurring at a rate of about ~1\%. These results suggest that the best method of fitting for both models is without initialisation.
 
 To determine whether a given LRT statistic is significant requires establishing the appropriate null distribution. Statistical theory states that under certain conditions, the LRT statistic will be $\chi^2_{df}$ distributed with degrees freedom (df) equal to the difference in the number of free parameters between the models. In which case, one can obtain the p-values for a given LRT statistic simply from the analytical distribution. However, the behaviour of my test with real finite data is unknown. When considering the use of mixed discrete- and continuous-time Markov process is a deviation from convention, it is especially important to establish whether the test statistic is consistent with theoretical expectations. 
 
-The distribution is closer to theoretical expectations for longer sequences, depicted in Figure \ref{fig:synthetic/lrt/197113-long_seq}. For alignments of length 300bp, shown in Figure \ref{fig:synthetic/lrt/197113-long_seq}a, the distribution of LRT statistic yields an excess of small p-values. Consequently, the data points of the Quantile-Quantile plot fall well below the diagonal line. Owing to increasing the power of the test, the distribution of p-values for longer alignments, illustrated in Figure \ref{fig:synthetic/lrt/197113-long_seq}b, is less skewed. Overall, the data points fall much closer to the diagonal line. It is worth noting that consistency with the theoretical distribution is most important for the smaller p-values. In Figure \ref{fig:synthetic/lrt/197113-long_seq}b, for quantiles corresponding to a significant test statistic (i.e. the bottom left corner where $p<0.05$), the distribution is very close to the theoretical distribution. This means that the chance of a false-positive is more or less in line with statistical expectations (5\%). Now, consider the distribution of p-values for $p>0.05$. Even though the distribution is not uniform, using the $\chi^{2}$ distribution, a non-significant result would still yield a non-significant p-value (true-negative). Thus, for some longer alignments, it may be suitable to assume the LRT statistics are $\chi^{2}$ distributed and in turn, obtain the p-value simply from analytical distribution. 
-
-
+The distribution is closer to theoretical expectations for longer sequences, depicted in Figure \ref{fig:synthetic/lrt/197113-long_seq}. The figure shows data generated from the same high JSD, high entropy seed process, however, the results for all seeds were very similar, for which figures are included in the appendices (ref). For alignments of length 300bp, shown in Figure \ref{fig:synthetic/lrt/197113-long_seq}a, the distribution of LRT statistic yields an excess of small p-values. Consequently, the data points of the Quantile-Quantile plot fall well below the diagonal line. Owing to increasing the power of the test, the distribution of p-values for longer alignments, illustrated in Figure \ref{fig:synthetic/lrt/197113-long_seq}b, is less skewed. Overall, the data points fall much closer to the diagonal line. It is worth noting that consistency with the theoretical distribution is most important for the smaller p-values. In Figure \ref{fig:synthetic/lrt/197113-long_seq}b, for quantiles corresponding to a significant test statistic (i.e. the bottom left corner where $p<0.05$), the distribution is very close to the theoretical distribution. This means that the chance of a false-positive is more or less in line with statistical expectations (5\%). Now, consider the distribution of p-values for $p>0.05$. Even though the distribution is not uniform, using the $\chi^{2}$ distribution, a non-significant result would still yield a non-significant p-value (true-negative). Thus, for some longer alignments, it may be suitable to assume the LRT statistics are $\chi^{2}$ distributed and in turn, obtain the p-value simply from analytical distribution. 
 
 \input{figures/plots/synthetic/lrt/197113_332182_17210-long_seq}
 
-Figure \ref{fig:synthetic/lrt/197113-long_branch} shows that increasing the branch length of sequences did not alter the distribution of LRT statistic. The distribution of LRT with and without branch scaling is depicted in Figures \ref{fig:synthetic/lrt/197113-long_branch}a and \ref{fig:synthetic/lrt/197113-long_branch}b respectively. The distributions are almost identical, which is further illustrated with a Quantile-Quantile plot comparing the distributions directly to each other, included in the \hyperref[Appendices]{Appendices} (see fig. ). It is important to note that this result is conditioned on constraints imposed on how much branch lengths could be changed. It is possible that allowing branch lengths to exceed $d=0.6$ and in turn, further increasing the number of events, would alter the distribution of the statistic.
+The exploration with synthetic data clearly informs the application of my test. Firstly, results of the initialisation experiment show there is no intrinsic fitting problems. As such, model fitting in all cases will be done without initialised parameter estimates. The results in Figure \ref{fig:synthetic/lrt/197113-long_seq} demonstrate that I cannot assume the LRT statistic to be $\chi^{2}$ distributed. As conventional asymptotic approximations to the LRT distribution are shown not to apply, significance levels will need to be assessed via a parametric bootstrap. 
+
+\subsection*{A transformed $\nabla$ statistic exhibited robust behaviour under the null}
+
+The statistic $\nabla$ is a measure of the speed of convergence of the actual process to equilibrium. Consider a process operating on a single edge of a phylogenetic tree for a time interval of length $t$, for which the frequencies of nucleotides at the root is $\pi_0$ and the rate matrix on the edge is $Q$. The nucleotide distribution at $t$ is $\pi(t) = \pi_{0} \cdot e^{Qt}$. For a stationary process, this simplifies to $\pi(t) = \pi_{0}$. Under weak assumptions, a non-stationary process will converge to a stationary process, for which $\pi$ remains unchanged over time. Thus, I can describe the speed of this convergence with the rate of change of $\pi(t)$. In other words, the derivative of $\pi$ with respect to $t$,
+\begin{equation}
+\label{eq:dpi/dt}
+\frac{\partial \pi}{\partial t}(t) = \pi_{0} \cdot Q \cdot e^{Qt}.
+\end{equation}
+To describe the magnitude of a vector in a single value, it is natural to take its length. Accordingly, the $\nabla$ statistic is defined as follows,
+\begin{equation}
+\label{eq:len-dpi/dt}
+\nabla = ||\frac{\partial \pi}{\partial t}(t)|| =|| \pi_{0} \cdot Q \cdot e^{Qt}||.
+\end{equation}
+$\nabla$ is the magnitude of the rate of change of $\pi(t)$. For a stationary process, for which by definition $\pi$ does not change over time, $\nabla = 0$. For a non-stationary process, as the process approaches equilibrium, $\nabla$ will asymptote to $0$. Thus, a large $\nabla$ will likely correspond to a process that is far from equilibrium and a small $\nabla$ to a process that is close to equilibrium. The algorithm used to calculate $\nabla$ is presented in Algorithm \ref{alg:convergence}.
+
+\input{figures/algorithms/convergence}
 
 
-\input{figures/plots/synthetic/lrt/197113_332182_17210-long_branch}
-
-\subsection{Published Tests}
-Squartini and Arndt 
 
 
-% \input{figures/plots/synthetic/chi2/197113_332182_17210}
-
-\subsection{$T_{50}$}
-
-% \input{figures/plots/synthetic/T50/300bp}
-
-% \input{figures/plots/synthetic/T50/197113_332182_17210-seq_len}
-
-\subsection{Convergence}
-
-% \input{figures/plots/synthetic/convergence/300bp}
-
-\subsection{Equivalence of Process}
-
-\section{Is the Human Genome at Equilibrium?}
-
-\input{figures/plots/primate/LRT-QQ.tex}
 
 
-The resolution of the LRT $p$ values is too low for conventional methods of multiple test corrections. The simulation results revealed that under the theoretical distribution the $p$ values are not uniformly distributed. As a result, they are unsuitable for assessing significance. A method for assessing significance, in this case, is with a parametric bootstrap. The compute time for a bootstrap with a single replicate is ${\sim} 6$ seconds. For each of the Primate data sets there are ${\sim} 1,300$ alignments. In order to satisfy the Bonferroni correction for $1,300$ alignments you would need to, with some level of precision, be able to estimate $p$ values below the altered significance threshold, $0.05/1,300 = 3.85{\times}10^{-5}$. For it to be possible to reject the null requires generating greater than $3.85{\times}10^{5}$ replicates per alignment. This would take $642$ hours per alignment, of which there are $2,600$. This is a prohibitive level of computation that is both impractical, and unnecessary. 
-
-I have established an alternate strategy that takes advantage of the shape of the distribution. The challenge of correcting for multiple tests is pronounced in the space of genomics, for which \cite{Storey2003StatisticalStudies} introduced a formal procedure for estimating the false discovery rate. In their case, they produce an alternate statistic to be interpreted for an individual result, which isn't applicable here due to the low resolution of $p$ values. However, their procedure included an estimation of the fraction of an analysis which is consistent with the null hypothesis. This method takes advantage of how the $p$ values of data that is consistent with the null will be uniformly distributed, illustrated in Figure 1 of \cite{Storey2003StatisticalStudies}. Fitting a cubic spline to determine the inflection point, one can estimate the proportion of a given distribution that is uniform consistent with the null hypothesis, denoted $\hat \pi_{0}$. Of interest to this analysis is $1 -\hat \pi_{0}$, the proportion that is not consistent with the null hypothesis. The code to produce $\hat \pi_{0}$ is included in the appendices. 
-
-Rates of evolution in introns and exons. If the null was true, and the branch length was the same between introns and exons, then the distribution of the difference would be centered on zero. Try a T-test of the null that the mean is zero, against the prior alternate that the exons are evolving slower, and so the mean is greater than zero. The assumption of the T-test is that the distribution is normal, which is hard to say in this case. The T-test is pretty robust, but I can test for whether it is normally distributed also. 
 
 
-\section{Is the \textit{D. melanogaster} genome further from equilibrium than \textit{D. simulans}?}
 
-\input{figures/plots/drosophila/LRT-QQ}
+\section*{Validation of method behaviour with empirical application}
 
-\input{figures/plots/drosophila/z-conv_manhatten}
 
- 
-\section{Is the half of \textit{Fxy} located in the Psuedo-Autosomal Region (PAR) further from equilibrium than the non-PAR half in \textit{M. musculus}?}
+
+\section*{Is the human genome at equilibrium?}

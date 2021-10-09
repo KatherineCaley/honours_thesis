@@ -1,0 +1,12 @@
+\begin{algorithm}[ht!]
+\caption[Algorithm]{Calculating $\nabla$}
+\label{alg:convergence}
+\begin{minted}{python}
+def convergence(pi_0, Q, t):
+
+    pi_deriv = dot(pi_0, dot(Q, expm(Q * t)))
+    conv = norm(pi_deriv)
+
+    return conv
+\end{minted}
+\end{algorithm}
