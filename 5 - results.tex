@@ -4,20 +4,22 @@ The aim of the methods described in this thesis is to provide tools to query the
 
 \section*{Developing and validating the methods}
 
+In order to ... I did ...
+
 A process of validation was applied to each method. A simple specification of methods is not enough, it is necessary to determine how it behaves and that it behaves in a way that matches up with the expectation when how the data is generated is known. There is an infinite number of ways in which things can be out of equilibrium, but the number of ways in which they can be in equilibrium is a lot more restrictive. Since I am interested in departures from being in equilibrium, that’s the condition set that I have imposed in developing the methods. Below I describe the intent of a particular statistic, then describe how it was developed.
 
-\subsection*{The LRT for Existence with parametric bootstrapping provided a robust estimation of significance}
+\subsection*{Initialisation of models did not affect parameter estimates}
 
-The test of existence seeks to determine whether the process is described significantly better by a non-stationary process. Formally, the test of existence is an LRT between the following hypotheses:\\ $\mathbf{H_0}$: the foreground evolved according to the \textbf{GNS}, the background according to BH. \\ $\mathbf{H_1}$: the foreground evolved according to the \textbf{GN}, the background according to BH.\\
-Here I report the best methods of model fitting and the behaviour of the test in simulated data. 
-
-It is important that the best possible methods of model fitting are chosen. A necessary precursor to any application of the test is to establish maximal fits of the models. Additionally, the process of fitting a model to an alignment is the most time-consuming method routinely used in my project. I have sought to identify the quickest possible method that yields a maximised likelihood. 
+It is important that the best possible methods of model fitting are chosen. The test of existence seeks to determine whether the process is described significantly better by a non-stationary process. Formally, the test of existence is an LRT between the following hypotheses:\\ $\mathbf{H_0}$: the foreground evolved according to the \textbf{GNS}, the background according to BH. \\ $\mathbf{H_1}$: the foreground evolved according to the \textbf{GN}, the background according to BH.\\
+A necessary precursor to any application of the test is to establish maximal fits of the models. Additionally, the process of fitting a model to an alignment is the most time-consuming method routinely used in my project. I have sought to identify the quickest possible method that yields a maximised likelihood. 
 
 For this, I conducted an initialisation experiment that makes use of a property of nested models. For nested models, it is guaranteed that the likelihood for the alternate will be greater or equal to that for the null. General Time-Reversible (GTR) is the most general time-reversible process and is required for my initialisation experiment. GTR is nested in GNS, which in turn is nested in GN. When a model is not maximally fit, the optimisation methods have failed to find the global maximum. Such is referred to as a local maximum, where they are higher points elsewhere but not nearby. In such cases, getting parameter estimates from a nested model fit to use as initial estimates may aid the optimisation in escaping a local maximum. I also wish to establish whether there is a speed gain in initialised model fits compared to uninitialised fits. Theoretically, if given starting values close to the optimal, this may reduce the time it takes to get there. 
 
 For all synthetic data sets, I tested whether initialisation improved the model fitting process. The initialised method fit models in order of increasing generality (GTR, GNS, GN). Importantly, parameter estimates for each model were obtained from the previous model. The uninitialised method fit GNS and GN separately. The maximum likelihood estimates between uninitialised and initialised fits were compared for the models (e.g., uninitialised GN vs initialised GN). The time taken for each fitting process was recorded.  
 
 The initialisation experiment revealed that there are no intrinsic problems with the fitting process for GN or GNS. A fit was considered non-maximal if the log-likelihood from the initialised method was higher than that of the uninitialised method. There were no occurrences of non-maximal fits for any of the synthetic alignments. Initialised fits which were faster than the corresponding uninitialised fits were rare, occurring at a rate of about ~1\%. These results suggest that the best method of fitting for both models is without initialisation.
+
+\subsection*{The LRT for Existence with parametric bootstrapping provided a robust estimation of significance}
 
 To determine whether a given LRT statistic is significant requires establishing the appropriate null distribution. Statistical theory states that under certain conditions, the LRT statistic will be $\chi^2_{df}$ distributed with degrees freedom (df) equal to the difference in the number of free parameters between the models. In which case, one can obtain the p-values for a given LRT statistic simply from the analytical distribution. However, the behaviour of my test with real finite data is unknown. When considering the use of mixed discrete- and continuous-time Markov process is a deviation from convention, it is especially important to establish whether the test statistic is consistent with theoretical expectations. 
 
@@ -50,15 +52,9 @@ The selected transformation, denoted $\delta_\nabla$, adjusted for location only
 
 \input{figures/plots/synthetic/d-conv-vs-conv/High JSD, High Entropy}
 
-The $\delta_\nabla$ statistic increases with a marker of historic disequilibrium. JSD is 
-
+The $\delta_\nabla$ statistic increases with a known marker of historic disequilibrium. JSD is an information theoretic measure of the difference between probability distributions. Therefore, the JSD between two edges of a tree is an indication of the level of historic disequilibrium in one or more of the lineages. The $\delta_\nabla$ statistic has a strong positive relationship with the JSD between ingroup edges for taxa from the microbial data set, illustrated in Figure \ref{fig:microbial/d-conv/JSD}. This relationship is very encouraging as it supports that $\delta_\nabla$ is in fact measuring what it is intended to measure, mutation disequilibrium. 
 
 \input{figures/plots/microbial/d-conv-JSD}
-
-
-
-
-
 
 \subsection*{The $T_{50}$ statistic exhibited paradoxical properties that prevent interpretation}
 
@@ -72,12 +68,19 @@ Put in that for a process in equilibrium it literally is zero because it is a go
 
 \input{figures/algorithms/T50}
 
-\subsection*{The tests of equivalence of process were consistent with asymptotic approximations}
+\subsection*{Both tests of equivalence of process were consistent with asymptotic approximations}
 
+An equivalence of process can be applied to two comparison, adjacent and temporal. Adjacent is the test of equivalence between neighbouring alignments of the same edge and temporal is the test between one-to-one orthologs. This is a hypothesis test for whether the process is shown to be different: analysing the concatenated alignments is the null (the process is the same); analysing them separately is the alternate (the process is different). Both tests are a comparison of likelihoods between fitting both alignments with one $\mathrm{Q}$ (null), or fitting a separate $\mathrm{Q}$ per alignment (alternate). Significance is assessed with a likelihood ratio, which again, it is necessary to determine whether asymptotic approximations apply. 
 
+The null distribution of the adjacent equivalence of process test was determined using pairs of synthetic alignments. The simulated data sets are collections of alignments that were generated from the same stationary process. By definition the generating process is equivalent, so any differences in model fits represents sampling error arising from finite data. Since the alignments were generated randomly, I constructed an artificial genome by arbitrarily ordering sequences and then performed a `a sliding window` of size two to select pairs of alignments.
+
+The null hypothesis for the temporal equivalence of process test is that the foreground edges are generated by the same process. This the not the case for the previously mentioned simulated data. To specify the null distribution I again used the four stationary seed alignments, but defined the two foreground edges have the same generating parameters. I simulated data sets of corresponding length to the previously described synthetic data sets. 
+
+Applying both tests to their respective null distributions indicated that both tests are consistent with theoretical expectations, presented in Figure \ref{fig:eop}. This is illustrated by Quantile-Quantile plots comparing the distribution of p-values to the uniform distribution for alignments of length 300 (fig. \ref{fig:eop}a) and 3,000 (fig. \ref{fig:eop}b).  This indicates that in application of both test, it is suitable to assume the statistic is $\chi^2_{df}$ distributed and in turn, obtain the p-value simply from analytical distribution. 
 
 \section*{Validation of method behaviour with empirical application}
 
+In this section to in order to .... I did ... 
 
 
 \section*{Is the human genome at equilibrium?}
