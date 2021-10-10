@@ -1,19 +1,19 @@
 \chapter{Results}
 
-The aim of the methods described in this thesis is to provide tools to query the disequilibrium of sequence evolution. Described in this chapter is the characterisation of the developed methods. I present the application of the test of existence, and test of consistency to simulated data. Additionally, I present two new statistics for measuring the magnitude of disequilibrium. I evaluate these statistics on simulated data. I complement this with the results of the methods applied to empirical data where I expect disequilibrium to exist.
+The aim of the methods described in this thesis is to provide tools to query the disequilibrium of sequence evolution. Described in this chapter is the characterisation of the developed methods. I present the application of the test of existence and test of consistency to simulated data. Additionally, I present two new statistics for measuring the magnitude of disequilibrium. I evaluate these statistics on simulated data. I complement this with the results of the methods applied to empirical data where I expect disequilibrium to exist.
 
 \section*{Developing and validating the methods}
 
-A process of validation was applied to each method. A simple specification of methods is not enough, it is necessary to determine how it behaves and that it behaves in a way that matches up with the expectation when how the data is generated is known. There is an infinite number of way in which things can be out of equilibrium, but the number of ways in which they can be in equilibrium is a lot more restrictive. Since I am interested in departures from being in equilibrium, that’s the condition set that I have imposed in developing the methods. Below I describe the intent of a particular statistic, then describe the way in which it was developed.
+A process of validation was applied to each method. A simple specification of methods is not enough, it is necessary to determine how it behaves and that it behaves in a way that matches up with the expectation when how the data is generated is known. There is an infinite number of ways in which things can be out of equilibrium, but the number of ways in which they can be in equilibrium is a lot more restrictive. Since I am interested in departures from being in equilibrium, that’s the condition set that I have imposed in developing the methods. Below I describe the intent of a particular statistic, then describe how it was developed.
 
 \subsection*{The LRT for Existence with parametric bootstrapping provided a robust estimation of significance}
 
-The test of existence seeks to determine whether the process is described significantly better by a non-stationary process. Formally, the test of existence is a LRT between the following hypotheses:\\ $\mathbf{H_0}$: the foreground evolved according to the \textbf{GNS}, the background according to BH. \\ $\mathbf{H_1}$: the foreground evolved according to the \textbf{GN}, the background according to BH.\\
+The test of existence seeks to determine whether the process is described significantly better by a non-stationary process. Formally, the test of existence is an LRT between the following hypotheses:\\ $\mathbf{H_0}$: the foreground evolved according to the \textbf{GNS}, the background according to BH. \\ $\mathbf{H_1}$: the foreground evolved according to the \textbf{GN}, the background according to BH.\\
 Here I report the best methods of model fitting and the behaviour of the test in simulated data. 
 
 It is important that the best possible methods of model fitting are chosen. A necessary precursor to any application of the test is to establish maximal fits of the models. Additionally, the process of fitting a model to an alignment is the most time-consuming method routinely used in my project. I have sought to identify the quickest possible method that yields a maximised likelihood. 
 
-For this, I conducted an initialisation experiment that makes use of a property of nested models. For nested models, it is guaranteed that the likelihood for the alternate will be greater or equal to that for the null. General Time-Reversible (GTR) is the most general time-reversible process, and is required for my initialisation experiment. GTR is nested in GNS, which in turn is nested in GN. When a model is not maximally fit, the optimisation methods have failed to find the global maximum. Such is referred to as a local maximum, where they are higher points elsewhere but not nearby. In such cases, getting parameter estimates from a nested model fit to use as initial estimates may aid the optimisation in escaping a local maximum. I also wish to establish whether there is a speed gain in initialised model fits compared to uninitialised fits. Theoretically, if given starting values close to the optimal, this may reduce the time it takes to get there. 
+For this, I conducted an initialisation experiment that makes use of a property of nested models. For nested models, it is guaranteed that the likelihood for the alternate will be greater or equal to that for the null. General Time-Reversible (GTR) is the most general time-reversible process and is required for my initialisation experiment. GTR is nested in GNS, which in turn is nested in GN. When a model is not maximally fit, the optimisation methods have failed to find the global maximum. Such is referred to as a local maximum, where they are higher points elsewhere but not nearby. In such cases, getting parameter estimates from a nested model fit to use as initial estimates may aid the optimisation in escaping a local maximum. I also wish to establish whether there is a speed gain in initialised model fits compared to uninitialised fits. Theoretically, if given starting values close to the optimal, this may reduce the time it takes to get there. 
 
 For all synthetic data sets, I tested whether initialisation improved the model fitting process. The initialised method fit models in order of increasing generality (GTR, GNS, GN). Importantly, parameter estimates for each model were obtained from the previous model. The uninitialised method fit GNS and GN separately. The maximum likelihood estimates between uninitialised and initialised fits were compared for the models (e.g., uninitialised GN vs initialised GN). The time taken for each fitting process was recorded.  
 
@@ -25,7 +25,7 @@ The distribution is closer to theoretical expectations for longer sequences, dep
 
 \input{figures/plots/synthetic/lrt/197113_332182_17210-long_seq}
 
-The exploration with synthetic data clearly informs the application of my test. Firstly, results of the initialisation experiment show there is no intrinsic fitting problems. As such, model fitting in all cases will be done without initialised parameter estimates. The results in Figure \ref{fig:synthetic/lrt/197113-long_seq} demonstrate that I cannot assume the LRT statistic to be $\chi^{2}$ distributed. As conventional asymptotic approximations to the LRT distribution are shown not to apply, significance levels will need to be assessed via a parametric bootstrap. 
+The exploration with synthetic data clearly informs the application of my test. Firstly, the results of the initialisation experiment show there is no intrinsic fitting problems. As such, model fitting in all cases will be done without initialised parameter estimates. The results in Figure \ref{fig:synthetic/lrt/197113-long_seq} demonstrate that I cannot assume the LRT statistic to be $\chi^{2}$ distributed. As conventional asymptotic approximations to the LRT distribution are shown not to apply, significance levels will need to be assessed via a parametric bootstrap. 
 
 \subsection*{A transformed $\nabla$ statistic exhibited robust behaviour under the null}
 
@@ -34,6 +34,7 @@ The statistic $\nabla$ is a measure of the speed of convergence of the actual pr
 \label{eq:dpi/dt}
 \frac{\partial \pi}{\partial t}(t) = \pi_{0} \cdot Q \cdot e^{Qt}.
 \end{equation}
+
 To describe the magnitude of a vector in a single value, it is natural to take its length. Accordingly, the $\nabla$ statistic is defined as follows,
 \begin{equation}
 \label{eq:len-dpi/dt}
@@ -43,13 +44,15 @@ $\nabla$ is the magnitude of the rate of change of $\pi(t)$. For a stationary pr
 
 \input{figures/algorithms/convergence}
 
-The $\nabla$ statistic required a transformation to address bias introduced in short sequences. Presented in Figure \ref{fig:synthetic/d-conv-vs-conv/HighJSDHighEntropy}a are the distributions of $\hat \nabla$ in simulated data sets generated by the exact same stationary seed, but for alignments of length 300, 3,000, and 30,000. The High JSD, High Entropy seed is shown in Figure \ref{fig:synthetic/d-conv-vs-conv/HighJSDHighEntropy}a, however, the result was almost identical for all seeds, which are included in the appendix (see Figure (ref)). Figure \ref{fig:synthetic/d-conv-vs-conv/HighJSDHighEntropy}a shows that not only was there more variation in $\hat \nabla$ for the shorter alignments, but the location of the mean differs between lengths. It is necessary for empirical applications to compare statistics between sequences of different lengths, for which the $\nabla$ statistic requires a transformation. 
+The $\nabla$ statistic required a transformation to address bias introduced in short sequences. Presented in Figure \ref{fig:synthetic/d-conv-vs-conv/HighJSDHighEntropy}a are the distributions of $\hat \nabla$ in simulated data sets generated by the same stationary seed, but for alignments of length 300, 3,000, and 30,000. Figure \ref{fig:synthetic/d-conv-vs-conv/HighJSDHighEntropy}a shows that not only was there more variation in $\hat \nabla$ for the shorter alignments, but the location of the mean differs between lengths. The High JSD, High Entropy seed is shown in Figure \ref{fig:synthetic/d-conv-vs-conv/HighJSDHighEntropy}a, however, this result was the same for all seeds, included in the appendix (see Figure \ref{fig:synthetic/conv/all_seeds}). Empirical applications must compare statistics between sequences of different lengths, for which the $\nabla$ statistic requires a transformation. 
 
-The selected transformation, denoted $\delta_\nabla$, adjusted for location only, so that the expected value was zero when the null was true. 
-
-
+The selected transformation, denoted $\delta_\nabla$, adjusted for location only, ensuring the expected value was zero when the null was true. For a given alignment, $\hat \delta_\nabla$ is the difference between the observed $\hat \nabla$ and the mean of  $\hat \nabla$ of synthetic alignments generated under the null, put explicitly, $\delta_\nabla =  \nabla - \mu_{\nabla{null}}.$ Presented in Figure \ref{fig:synthetic/d-conv-vs-conv/HighJSDHighEntropy}b are the distributions of $\hat \delta_\nabla$ in simulated data sets again generated by the High JSD, High Entropy seed for alignments of length 300, 3,000, and 30,000. \ref{fig:synthetic/d-conv-vs-conv/HighJSDHighEntropy}b shows that the expected value of the transformed $\delta_\nabla$ statistic is close to zero when the null is true. Although there is more variation in the shorter sequences, this simple method of transformation was chosen because the statistic retains the same units as the untransformed statistic. Normality?
 
 \input{figures/plots/synthetic/d-conv-vs-conv/High JSD, High Entropy}
+
+The $\delta_\nabla$ statistic increases with a marker of historic disequilibrium. JSD is    
+
+
 
 
 
@@ -58,7 +61,7 @@ The selected transformation, denoted $\delta_\nabla$, adjusted for location only
 
 A natural way to describe disequilibrium in a system is by its proximity to equilibrium. As previously stated, for a process in disequilibrium, as time goes to infinity, its nucleotide distribution will converge to $\pi_\infty$, its equilibrium distribution. This can be expressed mathematically as 
 $$\pi_\infty = \lim_{t \to \infty}\pi \cdot e^{\mathbf{Q}t}.$$ 
-This property manifests in other situations, for example the decay of a radioactive element. In those fields the problem of quantification is solved by expressing in terms of an arbitrarily chosen metric, half-life, the time taken until half of the element's original mass is left. ${T_{50}}$ is defined equivalently.
+This property manifests in other situations, for example, the decay of a radioactive element. In those fields the problem of quantification is solved by expressing in terms of an arbitrarily chosen metric, half-life, the time taken until half of the element's original mass is left. ${T_{50}}$ is defined equivalently.
 
 ${T_{50}}$ is a measure of the distance to halfway to $\pi_\infty$, measured in terms of the expected number of substitutions. 
 
