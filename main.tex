@@ -16,6 +16,7 @@
 \usepackage{minted}
 \usemintedstyle{perldoc}
 
+% colours
 \usepackage{xcolor} 
 
 % tables
@@ -33,11 +34,9 @@
 \usepackage{amssymb}
 \usepackage{bm}
 
-
 % spacing 
 \usepackage{setspace}
 \doublespacing
-
 
 % control bolding in table of contents 
 \usepackage[titles]{tocloft}
@@ -51,10 +50,8 @@
 
 % reference
 \usepackage{natbib}
-% \setcitestyle{authoryear, round}
-% \bibliographystyle{apalike}
 
-% referencing   
+% cross referencing   
 \usepackage{nameref}
 \usepackage{hyperref}
 \hypersetup{
@@ -109,9 +106,10 @@
 %TC:ignore
 \input{appendices}
 
-
+% set the bibliography as genetics style
 \bibliographystyle{geneticsstyle}
 \addcontentsline{toc}{chapter}{Bibliography}
 \bibliography{references}
+
 %TC:endignore
 \end{document}
