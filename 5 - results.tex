@@ -85,13 +85,29 @@ Applying both tests to their respective null distributions indicated that they a
 
 \section*{Testing the known}
 
-\subsubsection*{Naturally occurring cases of the alternate hypothesis support the efficiency of the methods}
+\subsection*{Naturally occurring cases of the alternate hypothesis support the efficiency of the methods}
 
-Having selected statistical measures based of validation with data consistent with the null hypothesis, I applied my methods to naturally occurring cases of the alternate hypothesis to validate whether they do, in fact, reflect an elevated level of disequilibrium. I report the application of my methods to two biological cases with striking prior evidence for recent perturbations affecting: an entire genome (loss of DNA methylation in \textit{D. melanogaster}); or, a small genomic segment (\textit{Fxy} in \textit{M. musculus}). I find that the methods are consistent with prior predictions made with knowledge of mechanism alone. 
+Having selected statistical measures based of validation with data consistent with the null hypothesis, I applied my methods to naturally occurring cases of the alternate hypothesis to validate whether they do, in fact, reflect an elevated level of disequilibrium. I report the application of my methods to two biological cases with striking prior evidence for recent perturbations affecting: an entire genome (loss of DNA methylation in \textit{D. melanogaster}); or, a small genomic segment (\textit{Fxy} in \textit{M. musculus}). The evidence for Dmel is very strong, note that the evidence is not so certain for Mmus. I find that the methods are consistent with prior predictions made with knowledge of mechanism alone. 
 
-\subsubsection*{The \textit{D. melanogaster} genome has genome-wide elevation of mutation disequilibrium when compared to its sister taxa, \textit{D. simulans}}
+\subsubsection*{Having lost a component of a major mutagenic process, the \textit{D. melanogaster} genome is systematically elevated in both the existence and magnitude of mutation disequilibrium compared to its sister taxa, \textit{D. simulans}}
+
+There is a striking elevation of the existence of mutation disequilibrium in the \textit{D. melanogaster} genome when compared to that of \textit{D. simulans}, shown in figure \ref{fig:drosophila_lrt_qq}. Each subplot in Figure \ref{fig:drosophila_lrt_qq} shows for the observed data, as well as simulated +ve and -ve controls, the distribution of $\hat p-$ values from the test of existence compared to the uniform distribution. The controls are two synthetic cases of ground truth no disequilibrium (-ve), and ground truth there is disequilibrium (+ve). The observed data points of \textit{D. melanogaster}, shown in Figure \ref{fig:drosophila_lrt_qq}b, fall substantially further from the -ve control than that of \textit{D. simulans}, shown in \ref{fig:drosophila_lrt_qq}a. This indicates that, as specified by the test of existence, a much larger proportion of the \textit{D. melanogaster} genome is in mutation disequilibrium than \textit{D. simulans}. The specific proportion of each genome, requires correcting for multiple tests of the same hypothesis. 
 
 \input{figures/plots/drosophila/LRT-QQ}
+
+The resolution of the test of existence $\hat p-$ values is too low for conventional methods of multiple test corrections. The simulation results revealed that under the theoretical distribution the $\hat p-$ values are not uniformly distributed. As a result, they are unsuitable for assessing significance. A method for assessing significance, in this case, is with a parametric bootstrap. The compute time for a bootstrap with a single replicate is ${\sim} 6$ seconds. For each of the Fly data sets there are ${\sim} 4,500$ alignments. In order to satisfy the Bonferroni correction for $4,500$ alignments you would need to, with some level of precision, be able to estimate $p$ values below the altered significance threshold, $0.05/4,500 = 1.1{\times}10^{-5}$. For it to be possible to reject the null requires generating greater than $1/1.1{\times}10^{-5}$ replicates per alignment. This would take $9,009$ hours per alignment, of which there are $>9,000$. This is a prohibitive level of computation that is both impractical, and unnecessary. 
+
+I have established an alternate strategy that takes advantage of the shape of the distribution. The challenge of correcting for multiple tests is pronounced in the space of genomics, for which \cite{Storey2003StatisticalStudies} introduced a formal procedure for estimating the false discovery rate. In their case, they produce an alternate statistic to be interpreted for an individual result, which isn't applicable here due to the low resolution of $p-$values. However, their procedure included an estimation of the fraction of an analysis which is consistent with the null hypothesis. This method takes advantage of how the $p-$values of data that is consistent with the null will be uniformly distributed, illustrated in Figure 1 of \citep{Storey2003StatisticalStudies}. Fitting a cubic spline to determine the inflection point, one can estimate the proportion of a given distribution that is uniform consistent with the null hypothesis, denoted here as $f$. Of interest to this analysis is $1 - f$, the proportion that is not consistent with the null hypothesis. The code to produce $f$ is available the \href{https://github.com/StoreyLab/qvalue}{qvalue} R package. 
+
+A significantly higher proportion of the \textit{D. melanogaster} genome is estimated to be in mutation disequilibrium compared to \textit{D. simulans}. The estimated proportion of the \textit{D. melanogaster} genome which is in mutation disequilibrium is 90\% compared to 50\% of the \textit{D. simulans} genome. 
+
+
+The magnitude of mutation disequilibrium is also higher in \textit{D. melanogaster}
+
+
+
+
+
 
 \input{figures/plots/drosophila/d-conv_manhatten}
 
