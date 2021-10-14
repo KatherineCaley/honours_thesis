@@ -4,11 +4,12 @@
 
 The aim of the methods described in this thesis is to provide tools to query the disequilibrium of sequence evolution. Described in this chapter is the characterisation of the developed methods. I present the application of the test of existence and test of consistency to simulated data. Additionally, I present two new statistics for measuring the magnitude of disequilibrium. I evaluated these statistics on simulated data. Having selected statistical measures based of validation with data consistent with the null hypothesis, I applied my methods to naturally occurring cases of the alternate hypothesis aiming to validate whether they do, in fact, reflect an elevated level of disequilibrium. I report the application of my methods to two biological cases with striking prior evidence for recent perturbations affecting: an entire genome (loss of DNA methylation in \textit{D. melanogaster}); or, a small genomic segment (\textit{Fxy} in \textit{M. musculus}). I find that the methods are consistent with prior predictions made with knowledge of mechanism alone.  
 
-\section*{Developing and validating the methods}
+\section{Developing and validating the methods}
+
 
 A process of validation was applied to each method. A simple specification of methods is not enough, it is necessary to determine how it behaves and that it behaves in a way that matches up with the expectation when how the data is generated is known. There is an infinite number of ways in which things can be out of equilibrium, but the number of ways in which they can be in equilibrium is a lot more restrictive. Since I am interested in departures from being in equilibrium, that’s the condition set that I have imposed in developing the methods. Below I describe the intent of a particular statistic, then describe how it was developed.
 
-\subsection*{The best method of model fitting is without initialisation}
+\subsubsection*{The best method of model fitting is without initialisation}
 
 It is important that the best possible methods of model fitting are chosen. The test of existence seeks to determine whether the process is described significantly better by a non-stationary process. Formally, the test of existence is an LRT between the following hypotheses:\\ $\mathbf{H_0}$: the foreground evolved according to the \textbf{GNS}, the background according to BH. \\ $\mathbf{H_1}$: the foreground evolved according to the \textbf{GN}, the background according to BH.\\
 A necessary precursor to any application of the test is to establish maximal fits of the models. Additionally, the process of fitting a model to an alignment is the most time-consuming method routinely used in my project. I have sought to identify the quickest possible method that yields a maximised likelihood. 
@@ -19,7 +20,7 @@ For all synthetic data sets, I tested whether initialisation improved the model 
 
 The initialisation experiment revealed that there are no intrinsic problems with the fitting process for GN or GNS. A fit was considered non-maximal if the log-likelihood from the initialised method was higher than that of the uninitialised method. There were no occurrences of non-maximal fits for any of the synthetic alignments. Initialised fits which were faster than the corresponding uninitialised fits were rare, occurring at a rate of about ~1\%. These results suggest that the best method of fitting for both models is without initialisation.
 
-\subsection*{The LRT for Existence with parametric bootstrapping provided a robust estimation of significance}
+\subsubsection*{The LRT for Existence with parametric bootstrapping provided a robust estimation of significance}
 
 To determine whether a given LRT statistic is significant requires establishing the appropriate null distribution. Statistical theory states that under certain conditions, the LRT statistic will be $\chi^2_{df}$ distributed with degrees freedom (df) equal to the difference in the number of free parameters between the models. In which case, one can obtain the p-values for a given LRT statistic simply from the analytical distribution. However, the behaviour of my test with real finite data is unknown. When considering the use of mixed discrete- and continuous-time Markov process is a deviation from convention, it is especially important to establish whether the test statistic is consistent with theoretical expectations. 
 
@@ -29,7 +30,7 @@ The distribution is closer to theoretical expectations for longer sequences, dep
 
 The exploration with synthetic data clearly informs the application of my test. Firstly, the results of the initialisation experiment show there is no intrinsic fitting problems. As such, model fitting in all cases will be done without initialised parameter estimates. The results in Figure \ref{fig:synthetic/lrt/197113-long_seq} demonstrate that I cannot assume the LRT statistic to be $\chi^{2}$ distributed. As conventional asymptotic approximations to the LRT distribution are shown not to apply, significance levels will need to be assessed via a parametric bootstrap. 
 
-\subsection*{A transformed $\nabla$ statistic exhibited robust behaviour under the null}
+\subsubsection*{A transformed $\nabla$ statistic exhibited robust behaviour under the null}
 
 The statistic $\nabla$ is a measure of the speed of convergence of the actual process to equilibrium. Consider a process operating on a single edge of a phylogenetic tree for a time interval of length $t$, for which the frequencies of nucleotides at the root is $\pi_0$ and the rate matrix on the edge is $Q$. The nucleotide distribution at $t$ is $\pi(t) = \pi_{0} \cdot e^{Qt}$. For a stationary process, this simplifies to $\pi(t) = \pi_{0}$. Under weak assumptions, a non-stationary process will converge to a stationary process, for which $\pi$ remains unchanged over time. Thus, I can describe the speed of this convergence with the rate of change of $\pi(t)$. In other words, the derivative of $\pi$ with respect to $t$,
 \begin{equation}
@@ -56,7 +57,7 @@ The $\delta_\nabla$ statistic increases with a known marker of historic disequil
 
 \input{figures/plots/microbial/d-conv-JSD}
 
-\subsection*{The $T_{50}$ statistic exhibited paradoxical propertied that prevented interpretation}
+\subsubsection*{The $T_{50}$ statistic exhibited paradoxical propertied that prevented interpretation}
 
 A seemingly natural way to describe disequilibrium in a system is by its proximity to equilibrium. As previously stated, for a process in disequilibrium, as time goes to infinity, its nucleotide distribution will converge to $\pi_\infty$, its equilibrium distribution. This can be expressed mathematically as 
 $$\pi_\infty = \lim_{t \to \infty}\pi \cdot e^{\mathbf{Q}t}.$$ 
@@ -74,7 +75,7 @@ $T_{50}$ estimated under the null was not robust to features of the data. In the
 
 \input{figures/tables/T50_means}
 
-\subsection*{Both tests of equivalence of process were consistent with asymptotic approximations}
+\subsubsection*{Both tests of equivalence of process were consistent with asymptotic approximations}
 
 An equivalence of process can be applied to two comparison, adjacent and temporal. Adjacent is the test of equivalence between neighbouring alignments of the same edge and temporal is the test between one-to-one orthologs. This is a hypothesis test for whether the process is shown to be different: analysing the concatenated alignments is the null (the process is the same); analysing them separately is the alternate (the process is different). Both tests are a comparison of likelihoods between fitting both alignments with one $\mathrm{Q}$ (null), or fitting a separate $\mathrm{Q}$ per alignment (alternate). Significance is assessed with a likelihood ratio, which again, it is necessary to determine whether asymptotic approximations apply. 
 
@@ -86,7 +87,7 @@ Applying both tests to their respective null distributions indicated that they a
 
 \input{figures/plots/synthetic/adj-temp_eop/High JSD, High Entropy}
 
-\section*{Testing the known}
+\section{Testing the known}
 
 Having lost major components of the DNA methylation process that remain in its sister taxa, the \textit{D. melanogaster} genome is a very useful natural experiment. DNA methylation is a well known mutagenic force. Consequently, the lack thereof in
 \textit{D. melanogaster} led to the strong prediction that the \textit{D. melanogaster} genome would exhibit globally high levels of mutation disequilibrium. Because it is a sister taxa to \textit{D. melanogaster} that still methylates its DNA, \textit{D. simulans} provided a necessary point of comparison. I performed two separate analyses, each with either \textit{D. melanogaster} or \textit{D. simulans} as the foreground, and another close taxa that retains methylation, \textit{D. yakubra}, as the outgroup. The analyses were performed on the same alignments of third codon positions from orthologous protein coding genes. The aim was to determine whether the developed methods would reflect the expected form of mutation disequilibrium. The expectations were that the \textit{D. melanogaster} genome would exhibit higher levels of both existence and magnitude of mutation disequilibrium than \textit{D. simulans} and that this would be a genome wide relationship. 
@@ -118,16 +119,17 @@ Strong purifying selection impedes the rate of convergence of the X chromosome. 
 Link back to the aim and whether the result show what I aimed to show. 
 
 
-\section*{Testing the conjectured}
+\section{Testing the conjectured}
 
 Recombination and its association with GC-biased gene conversion has been proposed to be a major force in the formation of isochores \citep{Montoya-Burgos2003RecombinationGenomes}. The translocation of \textit{Fxy} in \textit{M. musculus} such that half of the gene now resides in the only recombining part of the X chromosome is a unique natural experiment from which that conjecture may be corroborated. This perturbation is predicted to have led to elevated disequilibrium in the region that has moved into the PAR, relative to the component of the gene that remains in the uniquely X region. To interrogate this prediction I used alignments of \textit{Fxy} in \textit{M. musculus} with orthologs from \textit{M. spretus} and \textit{R. norvegicus}. For all model fitting, \textit{M. musculus} was the foreground edge. I analysed the first six introns of Fxy, of which in \textit{M. musculus} the $5'$ end (introns 1-2) is X-specific, and the $3'$ end (introns 4-6) is located in the PAR. The boundary of the PAR is found in the third intron \citep{Palmer1997AMice}. 
 
 I aimed to determine whether the current understanding of how this translocation may affect the divergence process would be  reflected by the methods. Because the entire gene had been translocated, I expected the whole gene to be in mutation disequilibrium. Considering the distinct mutagenic properties of the PAR, I aimed to see whether by using the statistic of magnitude, $\delta_\nabla$, I could detect elevated levels of disequilibrium in the PAR-located half. A specific location of the boundary is not provided, therefore, I aimed to see whether the magnitude of mutation disequilibrium locally within intron 3 would illustrate where the boundary is located. 
 
-\subsubsection{The }
+\subsubsection{The PAR-half of \textit{Fxy} has elevated mutation disequilibrium relative to the X-linked half in \textit{M. musculus}}
+
+\input{figures/diagrams/Fxy}
 
 
 
 
-
-\section*{Testing the unknown}
+\section{Testing the unknown}
