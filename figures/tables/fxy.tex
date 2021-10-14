@@ -1,19 +1,26 @@
 \begin{table}[htbp]
-\begin{tabularx}{\textwidth}{ 
-  | >{\centering\arraybackslash}X
-  | >{\centering\arraybackslash}X 
+
+\begin{center}
+\setstretch{1.6}
+\begin{tabularx}{\textwidth}[t]{ 
+  | >{\centering\arraybackslash}c 
   | >{\centering\arraybackslash}X 
   | >{\centering\arraybackslash}X  
-  | >{\centering\arraybackslash}X | }
-\hline  
- & Intron 1 & Intron 2 & \textbf{High JSD, High Entropy} & \textbf{Low JSD, High Entropy} \\
-\hline 
-    \textbf{300bp} & 0.3184 & 0.3363 & 0.3497 & 0.4576 \\
-    \textbf{3,000bp} & 0.2663 & 0.2563 & 0.3096 & 0.3990 \\
-   \textbf{30,000bp} & 0.2514 & 0.2778 & .3107 & 0.3911 \\ 
-\hline 
+  | >{\centering\arraybackslash}X  
+  | >{\centering\arraybackslash}X  
+  | >{\centering\arraybackslash}X  
+  | >{\centering\arraybackslash}X | 
+  }
+\hline
+\textbf{{Intron Rank}} & \textbf{{1}} & \textbf{{2}} & \textbf{{3}} & \textbf{{4}} & \textbf{{5}} & \textbf{{6}} \\
+\hline
+ToE $\hat p$-value & 0.00 & 0.00 & 0.01 & 0.00 & 0.00 & 0.00 \\
+\hline
+$\hat\delta_\nabla$ & 0.0019 & 0.0024 & 0.0115 & 0.0490 & 0.0470 & 0.0671 \\
+\hline
 \end{tabularx}
-\caption{Median $\hat T_{50}$ for simulated stationary data sets. }
-\label{t50_means}
+\end{center}
+\caption{\textbf{The magnitude of mutation disequilibrium is highest in the region of the \textit{Fxy} gene that resides in the PAR.}}
+\label{table:nablaFxy}
 
 \end{table}
