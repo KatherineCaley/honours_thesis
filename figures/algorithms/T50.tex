@@ -5,9 +5,8 @@
 class T50:
     def __init__(self, Q, pi_0, func=jsm):
         """
-        func
-            a callback function that takes two probability vectors
-            and returns a "distance". Defaults to Jensen-Shannon metric.
+        func:    A callback function that takes two probability vectors
+                 and returns a "distance". Defaults to Jensen-Shannon metric.
         """
         self.Q = Q
         self.pi_0 = pi_0
@@ -26,7 +25,6 @@ class T50:
             xinit=self.tau,
             bounds=([1], [1e10]),
             local=True,
-            show_progress=False,
             tolerance=1e-8,
         )
         ens_50 = expected_number_subs(self.pi_0, self.Q, self.tau)
