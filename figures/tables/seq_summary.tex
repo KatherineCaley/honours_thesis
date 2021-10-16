@@ -1,0 +1,42 @@
+\begin{table}[ht]
+\centering
+\small
+\setstretch{1.4}
+\begin{tabularx}{\textwidth}{ 
+  | >{\centering\arraybackslash}c
+  | >{\arraybackslash}X 
+  | >{\centering\arraybackslash}X 
+  | >{\centering\arraybackslash}X 
+  | >{\centering\arraybackslash}X 
+  | >{\centering\arraybackslash}X | }
+\hline
+&  & \multicolumn{2}{c |}{\textbf{Raw}} & \multicolumn{2}{c |}{\textbf{Filtered}} \\ 
+\hline
+\textbf{Data Set} & Taxa & Number of Alignments & Min, Median, and Max Sequence Length (bp) & Number of Alignments & Min, Median, and Max Sequence Length (bp) \\
+
+\hline
+
+Microbial & * & - & - & 9,854 & 924, 1,138, 1,276  \\
+
+\hline
+
+Drosophila  & \hbox{\textbf{\textit{D. melanogaster},}} \hbox{\textbf{\textit{D. simulans},}} \textit{D. yakubra} & 9,237 & 120, 1,287, 26,952 & 5,944 & 300, 1,230, 26,676  \\
+
+\hline
+
+Rodent & \hbox{\textbf{\textit{M. musculus}},} \hbox{\textbf{\textit{M. spretus},}} \hbox{\textit{R. norvegicus}} & 8 & 4,948, 26,680.5, 57,007 & 8 & 834, 7,062, 42,742 \\ 
+
+\hline
+
+\shortstack{ \\ Great Ape \\ Introns} & \textbf{Human}, \textbf{Chimp}, Gorilla & 1,481 & 103, 9,679, 298,974 & 1,406 & 302, 7,723.5, $274,635$ \\
+
+\hline
+
+\shortstack{ \\ Great Ape \\ CDS} & \textbf{Human}, \textbf{Chimp}, Gorilla & 1,683 & 165, 1,365, 26,775 & 1,182 & 300, 545.5, 8,601 \\
+
+\hline
+
+\end{tabularx}
+\caption{\textbf{Summary of Data Sets.} The ingroup edges for each set of taxa are bolded. \\ \textbf{*} The Microbial data set is comprised of alignments of the same sequence, but for different triads of taxa. }
+\label{tab:seq_summary}
+\end{table}
