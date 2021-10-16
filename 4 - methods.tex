@@ -1,37 +1,50 @@
 \chapter{Methods}
 
 \section{Data Sets}
-\subsection{Microbial}
 
-To establish the properties of my methods on alignments that range in their evolutionary divergence, I sampled a widely used molecular marker of genetic diversity. Herein the Microbial data, this is a subset of GreneGenes, a database of consistent alignments of the 16S rRNA gene in microbes \cite{McDonald2012AnArchaeab}. The Microbial data consists of 9702 alignments with a uniform distribution of Jensen-Shannon Divergence (JSD), details of the sampling process are described in Kaehler \textit{et al.} \cite{Kaehler2015}. 
+\subsubsection{Microbial}
 
+To establish the properties of my methods on alignments of taxa that range in their evolutionary divergence, I chose a widely used molecular marker of genetic diversity. Herein the Microbial data, this is a subset of GreneGenes, a database of consistent alignments of the 16S rRNA gene in microbes \citep{McDonald2012AnArchaeab}. The sequences are aligned using a customised alignment algorithm for ribosomal RNA that uses knowledge of secondary structure and conserved residues \citep{McDonald2012AnArchaea}. The Microbial data consists of 9702 alignments of species triples that were sampled from GreneGenes to get uniform representation of maximum Jensen-Shannon Divergence (JSD), details of the sampling process are described in \citep{Kaehler2015}. An important side effect of the sampling process is that a species can appear in more than one triple, so not each alignment is independent. The Microbial data was downloaded from Dryad data (\href{https://doi.org/10.5061/dryad.g7g0n}{https://doi.org/10.5061/dryad.g7g0n}).  
 
- The sequences are quality screened and aligned using secondary structure knowledge of conserved residues \cite{McDonald2012AnArchaea}
+\subsubsection{Drosophila}
 
+In order to test for elevated mutation disequilibrium in \textit{D. melanogaster}, I sampled alignments of \textit{D. melanogaster} genes with orthologs from closely related taxa: \textit{D. simulans} and \textit{D. yakubra}. Herein the Drosophila data, this contains 9237 alignments of one-to-one orthologs of protein coding sequence (CDS) obtained from \textit{flyDIVaS}, a database of curated \textit{D. melanogaster}-centric orthologous gene sets \citep{Stanley2016FlyDIVaS:Selection, Clark2007EvolutionPhylogeny}. The \textit{flyDIVaS} pipeline extracts protein-coding genes from the latest FlyBase release, identifying one-to-one orthologs using OrthoDB \citep{Zdobnov2021OrthoDBOrthologs}. Alignments of proteins are then performed using MUSCLE \citep{Edgar2004MUSCLE:Complexity}, which are backtranslated to CDS, filtered and masked. Further details of the sampling process are described in \citep{Stanley2016FlyDIVaS:Selection}. 
 
-\subsection{Great Apes}
+\subsubsection{Rodent}
 
+To establish the impact of translocation to the PAR on the \textit{Fxy} gene in \textit{M. musculus}, I sampled one-to-one orthologs of \textit{Fxy} from \textit{M. spretus} and \textit{Rattus norvegicus}, in which \textit{Fxy} is X-linked. Intronic \textit{Fxy} sequence for all species was sampled using EnsemblDb3, an open-source python tool for querying Ensembl for related sequences \citep{HuttleyEnsembldb3}. The first eight introns of \textit{Fxy} were  aligned using the Cogent3 progressive nucleotide aligner with default settings \citep{Knight2007PyCogent:Sequence}. All alignments parameters were saved in a log file for which the indel length=0.1, indel rate=1e-10. 
 
-Data for the Primate data set was sampled from Ensembl release 104 \cite{Howe2021Ensembl2021}. 
+\subsubsection{Great Apes}
 
-Ensembl Compara \cite{Howe2021Ensembl2021} contains annotated genome-wide species comparison data. This resource provides valuable annotation of related sequences amongst species, primarily vertebrates. 
+Sampling CDS and introns from the same gene is an important part of experimental design. The human genome, as well as many of the great apes are extremely well curated genomic resource. Ensembl Compara \cite{Herrero2016EnsemblResources} contains annotated genome-wide species comparison data where annotation of orthology is quality controlled using synteny. Data for the Great Apes data set was sampled from Ensembl release 104 \citep{Howe2021Ensembl2021} using EnsemblDb3 \citep{HuttleyEnsembldb3} and homologsampler \citep{HuttleyHomologsampler}, open-source python tools for querying Ensembl for related sequences. I identified one-to-one orthologs of protein coding genes in chromosome 1 of \textit{Homo sapiens} (human), \textit{Pan troglodytes} (chimpanzee) and \textit{Gorilla gorilla} (gorilla) using homologsampler. From this gene list I sampled unaligned one-to-one orthologs of exons, which corresponds to the coding sequence from the canonical transcript. To sample the introns I sampled the genes with all exons masked, masked sequence is later filtered out giving an alignment of concatenated introns. The introns are aligned by Ensembl. I aligned CDS using the Cogent3 progressive codon aligner with default settings \citep{Knight2007PyCogent:Sequence}. The CDS alignment parameters were saved into a log file for which the indel length=0.1, indel rate=1e-10. 
 
+\subsection{Data Filtering}
 
-The annotation of orthologs in the data set is done through the following pipeline. 
+Substitution models are explicitly restricted to interchanges between nucleotide states, so annotated positions linked to other mutation types will be removed. This includes annotated gap characters, representing an insertion-deletion event, and simple tandem repeats, likely to evolve through strand slippage \citep{Levinson1987Slipped-strandEvolution}. For all CDS, I filtered to include sites corresponding to the third codon position only. Alignments that contained less than $300$ position after filtering were not included in the analyses. The number and summary stats of alignments pre and post filtering is included in Table (\ref{tab:seq_summary}). 
 
+\input{figures/tables/seq_summary}
 
+I can exemplify the filtering process using dotplots. A dotplot is a way of visualising the relatedness between biological sequences \citep{Gibbs1970TheSequences}. In this case, the X and Y axes correspond to a nucleotide sequence, each dot on the plot indicated where the  nucleotide is identical between the two. Long stretches of identity between the two sequences form a diagonal. Using a psuedorandom algorithm I selected an alignment from both the Great Ape CDS and Intronic data sets to exemplify this filtering process, shown in Figure (ref). 
 
-\subsection{Drosophila}
-
-
-\subsection{Rodent}
 
 
 \section{Models}
-In this work I am concerned with the assumption of stationarity, requiring a model in which this constraint is relaxed. I will use two continuous-time models, General Nucleotide (GN), and General Stationary (GS), and one discrete-time model, the Barry and Hartigan (BH) model. GN is a non-stationary nucleotide model for which time-homogeneity between nodes in the tree is the only required constraint \citep{Kaehler2015}. GNS is a stationary nucleotide model, formulated by Von Bing Yap and Gavin Huttley (Personal Communication). The BH model is a general discrete-time Markov process for nucleotides \citep{Barry1987StatisticalEvolution}. The assumptions for each can be found in table \ref{model_assumptions}.
+
+In this work I will use two continuous-time models, General Nucleotide (GN), and General Stationary (GS), and one discrete-time model, the Barry and Hartigan (BH) model. 
+
+\subsubsection{GS}
+
+\subsubsection{GNS}
+
+
+\subsubsection{GTR}
+
+
+\subsubsection{BH}
+GN is a non-stationary nucleotide model for which time-homogeneity between nodes in the tree is the only required constraint \citep{Kaehler2015}. GNS is a stationary nucleotide model, formulated by Von Bing Yap and Gavin Huttley (Personal Communication). The BH model is a general discrete-time Markov process for nucleotides \citep{Barry1987StatisticalEvolution}. The assumptions for each can be found in table \ref{model_assumptions}.
 \input{figures/tables/model_assumptions}
 
-\gls{nested}
+
 
 \subsection{General Nucleotide Markov}
 
