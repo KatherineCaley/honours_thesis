@@ -20,6 +20,10 @@
 % colours
 \usepackage{xcolor} 
 
+% no hyphenation
+\usepackage[none]{hyphenat}
+\sloppy
+
 % tables
 \usepackage{tabularx}
 
@@ -41,6 +45,9 @@
 % spacing 
 \usepackage{setspace}
 \doublespacing
+
+% Change to this when printing out 
+% \setstretch{2.5} 
 
 % control bolding in table of contents 
 \usepackage[titles]{tocloft}
@@ -105,7 +112,7 @@
 \input{5 - results}
 %TC:ignore
 \input{6 - discussion}
-%TC:endignore
+
 
 %TC:ignore
 \input{appendices}
