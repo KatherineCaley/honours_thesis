@@ -1,8 +1,24 @@
 \begin{algorithm}[ht!]
-\caption[Algorithm]{Calculating $\nabla$}
+\caption[Algorithm]{\textbf{Calculating $\nabla$.} dot refers to matrix multiplication, expm is matrix exponentiation and norm is the vector norm, calculated as the euclidean distance (the square root of the sum of the absolute squares of the vector elements).}
 \label{alg:convergence}
 \begin{minted}{python}
 def convergence(pi_0, Q, t):
+    """ A measure of how fast pi_0 is changing
+    
+    Parameters
+    ----------
+    pi_0 : 1D array
+        a valid probability vector representing the initial state freqs
+    Q : 2D array 
+        a valid uncalibrated rate matrix
+    t : float
+        the branch length 
+    
+    Returns
+    ----------   
+    float
+    
+    """
 
     pi_deriv = dot(pi_0, dot(Q, expm(Q * t)))
     conv = norm(pi_deriv)

@@ -3,11 +3,11 @@
 \usepackage{graphicx}
 \usepackage[dvipsnames]{xcolor}
 \renewcommand{\thepage}{\roman{page}}	
-\setcounter{secnumdepth}{1}
+
 
 \title{Thesis Draft 1}
 \author{Katherine Caley}
-\date{July 2021}
+\date{}
 
 % margins
 \usepackage[a4paper,left=2cm,right=2cm,top=2cm,bottom=2cm]{geometry}
@@ -47,16 +47,28 @@
 \doublespacing
 
 % Change to this when printing out 
-% \setstretch{2.5} 
+% \setstretch{2.8} 
 
 % control bolding in table of contents 
 \usepackage[titles]{tocloft}
 
 % for formatting chapter titles
-\usepackage{titlesec}
+\usepackage[explicit]{titlesec}
 
 % chapters
 \titleformat{\chapter}[display]{\Huge}{\color{MidnightBlue}\raggedleft{Chapter \thechapter}}{10pt}{\titlerule}
+
+% controlling headings
+%\titlespacing{command}{left spacing}{before spacing}{after spacing}[right]
+
+\titleformat{\section}{\normalfont\large}{\thesection}{1em}{\textbf{#1}}
+\titlespacing\section{2pt}{2pt}{2pt} 
+\titleformat{\subsection}{\normalfont}{\thesubsection}{1em}{\textbf{\underline{\textit{#1}}}}
+\titlespacing\subsection{0pt}{0pt}{-2pt}
+\titleformat{\subsubsection}{\normalfont}{\thesubsubsection}{1em}{\textbf{\textit{#1}}}
+\titlespacing\subsubsection{1pt}{0pt}{-1pt}
+\titlespacing\paragraph{1pt}{0pt}{7pt}
+
 
 
 % reference
