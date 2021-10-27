@@ -51,31 +51,21 @@
 
 % control bolding in table of contents 
 \usepackage[titles]{tocloft}
+% \renewcommand{\cftchapfont}{\bfseries}
+% \renewcommand{\cftsecfont}{\bfseries}
 
 % for formatting chapter titles
-\usepackage[explicit]{titlesec}
+\usepackage{titlesec}
 
 % chapters
 \titleformat{\chapter}[display]{\Huge}{\color{MidnightBlue}\raggedleft{Chapter \thechapter}}{10pt}{\titlerule}
-
-% controlling headings
-%\titlespacing{command}{left spacing}{before spacing}{after spacing}[right]
-
-\titleformat{\section}{\normalfont\large}{\thesection}{1em}{\textbf{#1}}
-\titlespacing\section{2pt}{2pt}{2pt} 
-\titleformat{\subsection}{\normalfont}{\thesubsection}{1em}{\textbf{\underline{\textit{#1}}}}
-\titlespacing\subsection{0pt}{0pt}{-2pt}
-\titleformat{\subsubsection}{\normalfont}{\thesubsubsection}{1em}{\textbf{\textit{#1}}}
-\titlespacing\subsubsection{1pt}{0pt}{-1pt}
-\titlespacing\paragraph{1pt}{0pt}{7pt}
-
 
 
 % reference
 \usepackage{natbib}
 
 % cross referencing   
-\usepackage{nameref}
+% \usepackage{nameref}
 \usepackage{hyperref}
 \hypersetup{
     colorlinks,
@@ -86,8 +76,15 @@
 }
 
 % glossaries 
-\usepackage[acronym]{glossaries}
+%TC:ignore
+\usepackage[toc]{glossaries}
+\usepackage[stylemods=longextra]{glossaries-extra}
+\setglossarystyle{longragged3colheader}
+
 \input{glossary}
+
+% change the glossary style 
+
 
 \begin{document}
 %TC:ignore
@@ -113,16 +110,19 @@
 
 \renewcommand{\thepage}{\arabic{page}}	
 
-\input{3 - introduction}
+%TC:endignore
+ \input{3 - introduction}
+%TC:ignore
+
 \newpage
 
 
 \input{4 - methods}
 
 \newpage
-%TC:endignore
+
 \input{5 - results}
-%TC:ignore
+
 \input{6 - discussion}
 
 
