@@ -2,32 +2,112 @@
 
 Disequilibrium of mutagenesis is a phenomenon that is widely assumed not to exist, almost never examined, but potentially of profound significance with likely important applications. In this work, I have addressed the development of statistical methods of testing for its existence and characterising the form that it takes. I have found: it exists; is greater in magnitude following perturbations on local and global scales; and differs between samples. I unified simulation study and empirical knowns, allowing the application to an unknown case, in which I demonstrated that even over short time frames for relatively closely related species, more than half of the human genome is not a equilibrium. The basis for those conclusions and their implications will be discussed below. 
 
+Before launching into a full discussion of this work, I will enumerate a few underpinning assumptions. I assume that the given sequence data is an accurate depiction of the true DNA sequence, and that both annotation of orthology and the alignment path are correct. These are standard assumptions. I have performed both automated (ref) and manual (ref) quality control checks on the alignments. I do not imagine this has eliminated all error, however, understanding the impact of these assumptions is not addressed in this thesis. 
+
 \section{Outcomes of the unified statistical development process}
 
-\subsection{Lessons from the simulation study}
-
+\subsection{Lessons from simulations under the null}
 The simulation study evaluated the proposed methods on corner cases of the null hypothesis. This was a foundational step, in which I characterised the methods in known environments. The simulations provided valuable outcomes of how to perform the analyses, and equally importantly, when not to. 
 
-A major outcome of the simulation study was identifying the paradoxical behaviour of the $T_{50}$ statistic. Theoretically, $T_{50}$ is a natural measure. It uses biologically interpretable units in a way conceptually related to measures employed in other disciplines. It appears, however, that a half-life statistic does not work for this type of stochastic process. Although I interrogated a number of things I thought might be the cause, that line of inquiry is incomplete. At this point, it is not entirely certain what is the problem, but it does not appear to be a fruitful measurement for future research. 
+A major outcome of the simulation study was identifying the paradoxical behaviour of the $T_{50}$ statistic. Theoretically, $T_{50}$ is a natural measure. It uses biologically interpretable units in a way conceptually related to measures employed in other disciplines. It appears, however, that a half-life statistic does not work for this type of stochastic process (Section \ref{T50_results}). Although I interrogated a number of things I thought might be the cause, that line of inquiry is incomplete. At this point, it is not entirely certain what is the problem, but it does not appear to be a fruitful measurement for future research. 
 
 One imaginable explanation of the failings of $T_{50}$ is in its implicit assumption of the relationship between substitution events and chronological time. Consider the following thought experiment. The decay of non-stationarity is exponential. When you are far from equilibrium, many of the substitutions will take you closer to equilibrium. When you are really close to equilibrium, more of the substitutions will look like noise, and take you away from equilibrium. The halfway point is defined in terms of changes in the composition. So, perhaps in the asymptotic tail, halfway can be further away. Although just a thought experiment, this paradox demonstrates that it is not obvious how to choose a metric, and your intuition is not always correct. 
 
-The simulation study identified the appropriate basis for conducting the hypothesis tests. This step identified where the asymptotic assumptions do not hold, a crucial discovery for the TOE. As conventional asymptotic approximations to the TOE distribution were shown not to hold, $p$-values were estimated via parametric bootstrap. As as result, the TOE is a robust test for the existence of mutation disequilibrium, allowing for confidence in application to natural data. 
+The outcome for the $\delta_\nabla$ statistic was quite the converse.
+
+The simulation study identified the appropriate basis for conducting the hypothesis tests. This step identified where the asymptotic assumptions do not hold, a crucial discovery for the TOE (Section \ref{TOE_results}). As conventional asymptotic approximations to the TOE distribution were shown not to hold, $p$-values were estimated via parametric bootstrap. As a result, the TOE is a robust test for the existence of mutation disequilibrium, allowing for confidence in application to natural data. 
 
 \subsection{Does mutation disequilibrium exist?}
 
-I tackled the known cases of testing for mutation disequilibrium in \textit{D. melanogaster} and its sister taxa, \textit{D. simulans}. I estimated that the proportion of genes that were in mutation disequilibrium was 90\% and 50\% for \textit{D. melanogaster} and \textit{D. simulans} respectively.  The simulans lineage, however, had previously been shown to have a much higher level of disequilibrium, estimated by \cite{Squartini2008QuantifyingProcess} to be over 85\%. 
+\subsubsection{High levels of mutation disequilibrium in \textit{D. melanogaster} mirrors recent loss of methylation}
+I tackled the known cases of testing for mutation disequilibrium in \textit{D. melanogaster} and its sister taxa, \textit{D. simulans}. Using the TOE, I estimated that the proportion of genes that were in mutation disequilibrium was 90\% and 50\% for \textit{D. melanogaster} and \textit{D. simulans} respectively (Section \ref{TOE_drosophila}).  The simulans lineage had previously been shown to have a much higher level of disequilibrium, estimated by \cite{Squartini2008QuantifyingProcess} to be over 85\%. 
 
-A lack of consistency with asymptotic assumptions of published tests explains discrepancy with previous estimates of disequilibrium in \textit{D. simulans}. When I applied their test statistic to the data simulated under the null, it is acutely clear that their statistic does not satisfy the asymptotic distribution (Figure . 
+The discrepancy with previous disequilibrium estimates is because of the mistaken assumption of the asymptotic distribution by \cite{Squartini2008QuantifyingProcess}. When I applied the test statistic of \cite{Squartini2008QuantifyingProcess} to the data simulated under the null, it was abundantly clear that it does not satisfy the asymptotic distribution (Figure \ref{fig:synthetic/chi2/all-seeds}). Consequently, they excessively rejected the null hypothesis, ultimately causing their estimate to be incorrect.
+
+The higher level of mutation disequilibrium in \textit{D. melanogaster} relative to \textit{D. simulans} supports the hypothesised impact of losing $^5$mC. In comparison to non-methylated cytosine, $^5$mC is hypermutable, with higher rates of deamination to thymine \citep{Shen1994TheDNA, Coulondre1978MolecularColi}. If not correctly repaired, what was originally a G-C pairing turns into a A-T pairing. The loss of $^5$mC in \textit{D. melanogaster} would remove this mutational bias towards creating A-T pairings. Hypothetically, any equilibrium that had been achieved with $^5$mC present may no longer constitute and equilibrium with respect to the mutagenic process without it. Indeed, 90\% of \textit{D. melanogaster} is not in equilibrium (Section \ref{TOE_drosophila}). Such a substantial difference is a compelling result. Where there is strong evidence of the recent loss of $^5$mC, the vast majority of genes are in mutation disequilibrium. In a closely related species where the state of mutation has not so drastically changed, only half of the genes are in mutation disequilibrium.
+
+The substantive difference in disequilibrium between the species is clear, however, the conjectured cause was not directly interrogated. It is possible to support the interpretation in other ways, because the mechanism has other predictions that can be verified. The hypermutability of $^5$mC creates a mutational bias towards creating A-T base pairings. A simple supplementary analysis would look at whether the equilibrium nucleotide distribution of \textit{D. melanogaster} is then increasing in terms of GC content. 
+
+To directly interrogate the impact made by the presence or absence of $^5$mC would require implementing a dinucleotide model. $^5$mC primarily affects cytosine found in CpG dinucleotides, consequently depleting such dinucleotides from the genome \citep{Holliday1975DNADevelopment, Bird1980DNADNA}. To extend my methods to account for this process requires the combination of a few approaches. To take into account the impact of $^5$mC requires an approach presented in \cite{Huttley2004ModelingMammals}, of adding a parameter specifically for the mutation of CpG. Additionally, as it is modelling protein coding sequence, it is critical to deal with the confounder of natural selection operating on non-synonymous changes. This is achieved by the General Nucleotide Codon (GNC) model \citep{Kaehler2017StandardData}. Mapping a CpG parameter in into the GNC model would achieve the goal, however, it is important to note that the large number of free parameters would make any application exceedingly slow. Generalising my statistics for application to a dinucleotide process is an important avenue for future development. 
+
+Modelling evolution as an independent nucleotide process is a fundamental limitation of my methods and consequently a caveat to all my results. As illustrated above, the mutation process does not act on single nucleotide. In fact, it appears that the mutagenesis is substantially affected by the context of neighbouring bases \citep{Zhu2020MachineMutations}. Known as Simpson's Paradox \citep{Simpson1951TheTables}, it is possible that the increased mutation disequilibrium in \textit{D. melanogaster} relative to \textit{D. simulans}, along with all other results, are limited to the nucleotide dimension and would not appear in an analysis in another dimension (e.g., a  dinucleotide process). On the other hand, it is also possible that the result could be more pronounced. To that end, I defer to the words of George Box,``All models are wrong, some are useful''. 
+
+I tested for the existence of mutation disequilibrium in the recently translocated \textit{Fxy} gene in \textit{M. musculus}. I aimed to see if section of the gene located in the PAR would be further from equilibrium than the X-specific section. Applying the TOE to the first six introns, I determined that all introns analysed were in mutation disequilibrium (Section \ref{Fxy_TOE}). This result validated the need to develop methods of quantifying mutation disequilibrium, for with this result alone, the X-specific and PAR-located regions were indistinguishable.
 
 \subsection{What is the magnitude of mutation disequilibrium?}
 
+A significant outcome of this thesis is the development of the novel statistic $\delta_\nabla$, a measure of the magnitude of mutation disequilibrium (Section \ref{nabla}). The strong relationship between $\delta_\nabla$ and historical disequilibrium was very encouraging, as it supported that $\delta_\nabla$ is in fact measuring what it is intended to measure, mutation disequilibrium (Section \ref{nabla_results}). The effectiveness of $\delta_\nabla$ was shown to a greater extent by its capacity to detect predicted elevation of mutation disequilibrium following perturbations.  
+
+\subsubsection{The magnitude of mutation disequilibrium is higher following local changes in the mutagenic environment}
+
+Applying $\delta_\nabla$ to \textit{Fxy} clearly separates the X-specific and PAR-located regions (Section \ref{Fxy_TOE}). The region of the gene which is located in the PAR exhibits a markedly higher magnitude of disequilibrium than the X-specific region. Due to the higher levels of meiotic recombination in the PAR, it is natural to consider recombination as a likely cause. There is substantial evidence that recombination is a driving force of GC rich regions of genomes \citep{Meunier2004RecombinationGenome, Berglund2009HotspotsGenes,Galtier2009GC-biasedPrimates}. The conjectured mechanism is biased-gene conversion (BGC), where GC-alleles have a higher probability of fixation than AT-alleles \citep{Eyre-Walker1999EvidenceDNA., Mancera2008High-resolutionYeast}. This mechanism is supported by the results of \cite{Montoya-Burgos2003RecombinationGenomes}, who found that the section of \textit{Fxy} in the PAR exhibited a substantial increase in GC content. 
+
+Alternate explanations of this local increase in mutation disequilibrium are not as compelling. It is possible that this result is due to another distinct feature of the PAR, homology with the Y chromosome. The X-linked PAR recombines with the Y-linked sequence, which is further subjected to the higher germ-line mutation rate of males \citep{Huttley2000HowMutagenesis}. As male mutational bias does not appear to be linked to increased GC content, this explanation is less probable. 
+
+\subsubsection{The magnitude of mutation disequilibrium is higher following global changes to mutation}
+
+To measure the magnitude of mutation disequilibrium on a global scale I applied $\delta_\nabla$ to \textit{D. melanogaster} and \textit{D. simulans} genomes (Section \ref{TOE_drosophila}). The mean of $\delta_\nabla$ was significantly higher in \textit{D. melanogaster} relative to \textit{D. simulans}, consistent across all chromosomes. In fact, $82$\% of genes had a higher magnitude of mutation disequilibrium in \textit{D. melanogaster}. Following an event that has caused disequilibrium, as the process approaches equilibrium, $\delta_\nabla$ will asymptote to zero. Therefore, the level of $\delta_\nabla$ in \textit{D. melanogaster} indicates that disequilibrium has been recently created. It is a reasonable hypothesis that the loss of $^5$mC is the driving force behind this elevated disequilibrium, however, it is difficult to rule out other factors. 
+
+An intrinsic limitation of analysing historical processes is that the $\delta_\nabla$ statistic cannot determine or distinguish between causes. Considering that the methylation of DNA has a key role in the epigenetic regulation of gene expression \citep{Holliday1975DNADevelopment, Compere1981DNACells, Lieberman1983UltravioletDemethylation}. Furthermore, in mammalian embryos, the loss of methylation is lethal \citep{Panning1996DNAGenes}. Such is pure speculation, however, \textit{D. melanogaster} presumably has another method of regulating gene expression in lieu of methylation. If such a mechanism exists and has evolved recently, it may be contributing to the marked increase in mutation disequilibrium. 
+
+Principal Component analysis. 
+
+\subsubsection{The magnitude of mutation disequilibrium is variable within an intron}
+
+The oscillation of $\delta_\nabla$ within introns may be caused by the unique chromatin structure of the PAR. 
+
+How to confirm this association
+
+How to test this hypothesis. 
+
+
+
+
 \subsection{Does mutation disequilibrium differ between samples?}
 
+The process of mutation was shown to be overwhelmingly similar between orthologs of \textit{D. melanogaster} and \textit{D. simulans}, with only 5\% of genes rejecting the null of equivalence (Section \ref{TOE_drosophila}). Considering the substantially different levels of mutation disequilibrium existence and magnitude between the species, this was an unexpected result. 
+
+If we were to assume that the genes were dominantly evolving by the same process, then what could possibly cause the difference in disequilibrium between the species? A possible cause of this discrepancy could be that the simulans lineage is simply evolving faster and is closer to equilibrium already. 
+
+Simpson's paradox may help explain the disagreement between levels of existence and equivalence of mutation disequilibrium in \textit{D. melanogaster} compared to \textit{D. simulans}. As explained earlier, the hypothesised mechanism of disequilibrium, $^5$mC, is more appropriately modelled as dinucleotide process. 
+
+- The process of mutation was very different between adjacent introns in Human. 
+
+- Naturally, the first question to ask is whether this difference in magnitude is simply due to the intrinsic differences in the rate of evolution across the genome. Given the difference in the process, this is likely not the case. 
+
 \section{The role of selection in influencing mutation disequilibrium}
+
+The X chromosome in drosophila versus its autosomes. 
+
+Intron vs 3rd codon position in primates. 
+
+\section{The Evolution of mutation}
+
+The existence of mutation disequilibrium in \textit{D. melanogaster} must been interpreted alongside the theory of evolution of mutation as it unifies ideas of mutation, selection and drift \citep{Lynch2008TheEvolution., Lynch2010EvolutionRate}. The theory proposed by \cite{Lynch2008TheEvolution.} states that mutation rates reflects selection operating to lower the mutation rate, but ultimately being opposed by random genetic drift \citep{Lynch2010EvolutionRate}. To be greater than the power of random genetic drift and thus pose a selective advantage, an antimutator allele must reduce the genome-wide deleterious mutation rate considerably \citep{Lynch2008TheEvolution., Lynch2010EvolutionRate}. The loss of key methylation machinery in \textit{D. melanogaster} has thus overcome a substantial barrier on the lower bound of the mutation rate. 
+
+The recent evolution of an antimutator in \textit{D. melanogaster} is reflected in the results of the TOE. The level of mutation disequilibrium in \textit{D. melanogaster} far exceed that of its sister taxa. It appears that a change in mutation is followed by an elevation in mutation disequilibrium, as the lineage attains a new equilibrium. Critically, this existence of disequilibrium can be detected by the TOE. Assuming the disequilibrium in \textit{D. melanogaster} is caused by the recent evolution of mutation, application of the TOE across the tree of life will help characterise how often mutators evolve. 
 
 \section{Is the Human genome at equilibrium?}
 
 \section{Future Directions}
 
+\subsection{On a genome level}
+How often do mutator evolve? 
+
+Do patterns exist and are they conserved between closely related species?
+
+Will application to more taxa reflect theories about the relationship between selection and drift?
+
+The development of a method of visualising the direction of compositional change would provide a unique understanding of the processes acting upon the genome. As mentioned previously, there is an expectation of an increase in GC content associated with the loss of $^5$mC. $\delta_\nabla$ is the magnitude of the vector that represents the current rate of change of nucleotide composition. A vector also has an associated direction. Mapping the direction and magnitude of compositional change across the genome. The application of vector fields to areas such as developmental biology \citep{Steiner2009VectorEmbryogeny} and transcriptomics \citep{Qiu2021MappingCells}, represent a new and exciting context to understanding biological phenomena. 
+
+\subsection{On a gene level}
+
+The ability to tell whether positive selection is operating on a gene?
+
+Detecting horizontal gene transfer. 
+
+Analysing the SARS-CoV-2 genome
+
 \section{Conclusions}
+
+Significance and big picture overview of the results.

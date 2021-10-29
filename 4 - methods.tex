@@ -33,7 +33,7 @@ I illustrate the impact of the filtering process using dotplots. A dotplot displ
 
 \section{Models}
 
-Phylogenetics! the concept of a tree. Because all sampling was done in triple I assume an unrooted phylogeny
+Phylogenetics! the concept of a tree. Because all sampling was done in triple I assume an unrooted phylogeny. 
 
 Substitution models describe the evolutionary process along the edge of a tree by modelling substitutions as a Markov process. For a nucleotide process, the possible states are the finite set of nucleotide bases $X = [A, C, G, T]$ and the state frequencies at the common ancestor is denoted $\pi$. Most commonly used are continuous-time processes, defined by a rate matrix denoted $\mathrm{Q}$. The elements of $\mathrm{Q}$ represent the instantaneous rate of change from the row label state (e.g. $A$) to a column label state (e.g. $T$). A discrete-time process is defined in terms of substitution probability matrix, denoted $\mathrm{P}$, in which elements represent the probabilities of substituting the row label state with the column label state in some time $t$ interval. For a continuous-time model, the two representations are related by the following, $\mathrm{P}(t) = e^{\mathrm{Q}t}$. 
 
