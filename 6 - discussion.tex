@@ -1,12 +1,24 @@
 \chapter{Discussion}
 
-Disequilibrium of mutagenesis is a phenomenon that is widely assumed not to exist, almost never examined, but potentially of profound significance with likely important applications. In this work, I have addressed the development of statistical methods of testing for its existence and characterising the form that it takes. I have found: it exist; is greater in magnitude following perturbations on local and global scales; and differs between samples. I unified simulation study, empirical knowns, and application to a unknown case, demonstrating that even over short time frames for relatively closely related species, more than half of the genome is not a equilibrium. The basis for those conclusions and their implications will be discussed below. 
+Disequilibrium of mutagenesis is a phenomenon that is widely assumed not to exist, almost never examined, but potentially of profound significance with likely important applications. In this work, I have addressed the development of statistical methods of testing for its existence and characterising the form that it takes. I have found: it exists; is greater in magnitude following perturbations on local and global scales; and differs between samples. I unified simulation study and empirical knowns, allowing the application to an unknown case, in which I demonstrated that even over short time frames for relatively closely related species, more than half of the human genome is not a equilibrium. The basis for those conclusions and their implications will be discussed below. 
 
 \section{Outcomes of the unified statistical development process}
 
 \subsection{Lessons from the simulation study}
 
+The simulation study evaluated the proposed methods on corner cases of the null hypothesis. This was a foundational step, in which I characterised the methods in known environments. The simulations provided valuable outcomes of how to perform the analyses, and equally importantly, when not to. 
+
+A major outcome of the simulation study was identifying the paradoxical behaviour of the $T_{50}$ statistic. Theoretically, $T_{50}$ is a natural measure. It uses biologically interpretable units in a way conceptually related to measures employed in other disciplines. It appears, however, that a half-life statistic does not work for this type of stochastic process. Although I interrogated a number of things I thought might be the cause, that line of inquiry is incomplete. At this point, it is not entirely certain what is the problem, but it does not appear to be a fruitful measurement for future research. 
+
+One imaginable explanation of the failings of $T_{50}$ is in its implicit assumption of the relationship between substitution events and chronological time. Consider the following thought experiment. The decay of non-stationarity is exponential. When you are far from equilibrium, many of the substitutions will take you closer to equilibrium. When you are really close to equilibrium, more of the substitutions will look like noise, and take you away from equilibrium. The halfway point is defined in terms of changes in the composition. So, perhaps in the asymptotic tail, halfway can be further away. Although just a thought experiment, this paradox demonstrates that it is not obvious how to choose a metric, and your intuition is not always correct. 
+
+The simulation study identified the appropriate basis for conducting the hypothesis tests. This step identified where the asymptotic assumptions do not hold, a crucial discovery for the TOE. As conventional asymptotic approximations to the TOE distribution were shown not to hold, $p$-values were estimated via parametric bootstrap. As as result, the TOE is a robust test for the existence of mutation disequilibrium, allowing for confidence in application to natural data. 
+
 \subsection{Does mutation disequilibrium exist?}
+
+I tackled the known cases of testing for mutation disequilibrium in \textit{D. melanogaster} and its sister taxa, \textit{D. simulans}. I estimated that the proportion of genes that were in mutation disequilibrium was 90\% and 50\% for \textit{D. melanogaster} and \textit{D. simulans} respectively.  The simulans lineage, however, had previously been shown to have a much higher level of disequilibrium, estimated by \cite{Squartini2008QuantifyingProcess} to be over 85\%. 
+
+A lack of consistency with asymptotic assumptions of published tests explains discrepancy with previous estimates of disequilibrium in \textit{D. simulans}. When I applied their test statistic to the data simulated under the null, it is acutely clear that their statistic does not satisfy the asymptotic distribution (Figure . 
 
 \subsection{What is the magnitude of mutation disequilibrium?}
 
