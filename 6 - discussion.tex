@@ -2,7 +2,7 @@
 
 Disequilibrium of mutagenesis is a phenomenon that is widely assumed not to exist, almost never examined, but potentially of profound significance with likely important applications. In this work, I have addressed the development of statistical methods of testing for its existence and characterising the form that it takes. I have found: it exists; is greater in magnitude following perturbations on local and global scales; and differs between samples. I unified simulation study and empirical knowns, allowing the application to an unknown case, in which I demonstrated that even over short time frames for relatively closely related species, more than half of the human genome is not a equilibrium. The basis for those conclusions and their implications will be discussed below. 
 
-Before launching into a full discussion of this work, I will enumerate a few underpinning assumptions. I assume that the given sequence data is an accurate depiction of the true DNA sequence, and that both annotation of orthology and the alignment path are correct. These are standard assumptions. I have performed both automated (ref) and manual (ref) quality control checks on the alignments. I do not imagine this has eliminated all error, however, understanding the impact of these assumptions is not addressed in this thesis. 
+Before launching into a full discussion of this work, I will enumerate a few underpinning assumptions. I assume that the given sequence data is an accurate depiction of the true DNA sequence, and that both annotation of orthology and the alignment path are correct. These are standard assumptions. I have performed both automated (ref) and manual (ref) quality control checks on the alignments. I do not imagine this has eliminated all errors, however, understanding the impact of these assumptions is not addressed in this thesis. 
 
 \section{Outcomes of the unified statistical development process}
 
@@ -13,7 +13,7 @@ A major outcome of the simulation study was identifying the paradoxical behaviou
 
 One imaginable explanation of the failings of $T_{50}$ is in its implicit assumption of the relationship between substitution events and chronological time. Consider the following thought experiment. The decay of non-stationarity is exponential. When you are far from equilibrium, many of the substitutions will take you closer to equilibrium. When you are really close to equilibrium, more of the substitutions will look like noise, and take you away from equilibrium. The halfway point is defined in terms of changes in the composition. So, perhaps in the asymptotic tail, halfway can be further away. Although just a thought experiment, this paradox demonstrates that it is not obvious how to choose a metric, and your intuition is not always correct. 
 
-The outcome for the $\delta_\nabla$ statistic was quite the converse.
+The outcome for the $\delta_\nabla$ statistic was quite the opposite. The strong relationship between $\delta_\nabla$ and historical disequilibrium was very encouraging, as it supported that $\delta_\nabla$ is in fact measuring what it is intended to measure, mutation disequilibrium (Section \ref{nabla_results}).
 
 The simulation study identified the appropriate basis for conducting the hypothesis tests. This step identified where the asymptotic assumptions do not hold, a crucial discovery for the TOE (Section \ref{TOE_results}). As conventional asymptotic approximations to the TOE distribution were shown not to hold, $p$-values were estimated via parametric bootstrap. As a result, the TOE is a robust test for the existence of mutation disequilibrium, allowing for confidence in application to natural data. 
 
@@ -36,11 +36,15 @@ I tested for the existence of mutation disequilibrium in the recently translocat
 
 \subsection{What is the magnitude of mutation disequilibrium?}
 
-A significant outcome of this thesis is the development of the novel statistic $\delta_\nabla$, a measure of the magnitude of mutation disequilibrium (Section \ref{nabla}). The strong relationship between $\delta_\nabla$ and historical disequilibrium was very encouraging, as it supported that $\delta_\nabla$ is in fact measuring what it is intended to measure, mutation disequilibrium (Section \ref{nabla_results}). The effectiveness of $\delta_\nabla$ was shown to a greater extent by its capacity to detect predicted elevation of mutation disequilibrium following perturbations.  
+A significant outcome of this thesis is the development of the novel statistic $\delta_\nabla$, a measure of the magnitude of mutation disequilibrium (Section \ref{nabla}). The effectiveness of $\delta_\nabla$ was shown by its capacity to detect predicted elevation of mutation disequilibrium following perturbations. I will discuss the application of $\delta_\nabla$ to positive empirical controls below.  
 
 \subsubsection{The magnitude of mutation disequilibrium is higher following local changes in the mutagenic environment}
 
-Applying $\delta_\nabla$ to \textit{Fxy} clearly separates the X-specific and PAR-located regions (Section \ref{Fxy_TOE}). The region of the gene which is located in the PAR exhibits a markedly higher magnitude of disequilibrium than the X-specific region. Due to the higher levels of meiotic recombination in the PAR, it is natural to consider recombination as a likely cause. There is substantial evidence that recombination is a driving force of GC rich regions of genomes \citep{Meunier2004RecombinationGenome, Berglund2009HotspotsGenes,Galtier2009GC-biasedPrimates}. The conjectured mechanism is biased-gene conversion (BGC), where GC-alleles have a higher probability of fixation than AT-alleles \citep{Eyre-Walker1999EvidenceDNA., Mancera2008High-resolutionYeast}. This mechanism is supported by the results of \cite{Montoya-Burgos2003RecombinationGenomes}, who found that the section of \textit{Fxy} in the PAR exhibited a substantial increase in GC content. 
+Applying $\delta_\nabla$ to \textit{Fxy} clearly separated the X-specific and PAR-located regions (Section \ref{Fxy_TOE}). The region of the gene which is located in the PAR exhibits a markedly higher magnitude of disequilibrium than the X-specific region. Due to the higher levels of meiotic recombination in the PAR, it is natural to consider recombination as a likely cause. 
+
+Recombination is thought to affect the evolutionary process in three ways \citep{Galtier2004RecombinationParadox}. 
+
+There is substantial evidence that recombination is a driving force of GC rich regions of genomes \citep{Meunier2004RecombinationGenome, Berglund2009HotspotsGenes,Galtier2009GC-biasedPrimates}. The conjectured mechanism is biased-gene conversion (BGC), where GC-alleles have a higher probability of fixation than AT-alleles \citep{Eyre-Walker1999EvidenceDNA., Mancera2008High-resolutionYeast}. This mechanism is supported by the results of \cite{Montoya-Burgos2003RecombinationGenomes}, who found that the section of \textit{Fxy} in the PAR exhibited a substantial increase in GC content.
 
 Alternate explanations of this local increase in mutation disequilibrium are not as compelling. It is possible that this result is due to another distinct feature of the PAR, homology with the Y chromosome. The X-linked PAR recombines with the Y-linked sequence, which is further subjected to the higher germ-line mutation rate of males \citep{Huttley2000HowMutagenesis}. As male mutational bias does not appear to be linked to increased GC content, this explanation is less probable. 
 
@@ -65,17 +69,71 @@ How to test this hypothesis.
 
 \subsection{Does mutation disequilibrium differ between samples?}
 
-The process of mutation was shown to be overwhelmingly similar between orthologs of \textit{D. melanogaster} and \textit{D. simulans}, with only 5\% of genes rejecting the null of equivalence (Section \ref{TOE_drosophila}). Considering the substantially different levels of mutation disequilibrium existence and magnitude between the species, this was an unexpected result. 
+I developed two EOP tests to tackle the statistical problem of whether two related sequences were evolving by an equivalent process. The EOP tests are crucial components of the contribution of my methods to biology. 
 
-If we were to assume that the genes were dominantly evolving by the same process, then what could possibly cause the difference in disequilibrium between the species? A possible cause of this discrepancy could be that the simulans lineage is simply evolving faster and is closer to equilibrium already. 
+\subsubsection{The process was shown to be similar between \textit{D. melanogaster} and \textit{D. simulans} }
 
-Simpson's paradox may help explain the disagreement between levels of existence and equivalence of mutation disequilibrium in \textit{D. melanogaster} compared to \textit{D. simulans}. As explained earlier, the hypothesised mechanism of disequilibrium, $^5$mC, is more appropriately modelled as dinucleotide process. 
+The process of mutation was shown to be overwhelmingly similar between orthologs of \textit{D. melanogaster} and \textit{D. simulans}, with only 5\% of genes rejecting the null of equivalence (Section \ref{TOE_drosophila}). Considering the substantially different levels of mutation disequilibrium existence and magnitude between the species, and the fact that one species is methylating and the other is not, this was an unexpected result. 
 
-- The process of mutation was very different between adjacent introns in Human. 
+Assuming that the genes are evolving by the same process, a natural first question to ask is whether the simulans lineage is simply evolving faster and thus is closer to equilibrium already. If this was the case, then we would expect for most genes that the branch length of the \textit{D. simulans} edge would be greater. However, we actually see the opposite, (Figure \ref{fig:drosophila_d-conv-diff}a) and for 75\% of genes, the \textit{D. melanogaster} ortholog has a longer branch length, making this explanation unlikely. 
 
-- Naturally, the first question to ask is whether this difference in magnitude is simply due to the intrinsic differences in the rate of evolution across the genome. Given the difference in the process, this is likely not the case. 
+Simpson's paradox may help explain the disagreement between levels of existence and equivalence of mutation disequilibrium in \textit{D. melanogaster} compared to \textit{D. simulans}. As explained above, the hypothesised mechanism of disequilibrium, $^5$mC, is more appropriately modelled as a dinucleotide process. Perhaps, two processes that are not discernible on a nucleotide level, may be radically different on the dinucleotide level. Again, to determine if this is the case would require implementing the methods as a dinucleotide process. 
 
-\section{The role of selection in influencing mutation disequilibrium}
+How come the difference was determined by the TOE and the magnitude statistic?
+
+The power of the test may also influence this result. It is also possible that the temporal Equivalence of Process is simply a low powered test. This may result from the choice to model all edges as continuous time. 
+
+I therefore conclude that the most likely explanation for these results is a combination between the low power of the test and the fact that the change in the process has occurred on a dinucleotide level. 
+
+\subsubsection{There are significantly different evolutionary processes within the \textit{Fxy} gene}
+
+I tested whether adjacent \textit{Fxy} introns were evolving by an equivalent process. I found that the introns within the PAR were evolving by the same process, yet all other adjacent comparisons were evolving by different processes (Section \ref{Fxy_TOE}). 
+
+It is tempting to imagine that this result reflects the historical inclusion of these sequences in the PAR. The addition/attrition hypothesis of evolution of the sex chromosome proposes that genetic material is added to the PAR and is initially present on both the X and Y chromosomes, but is followed by attrition of the pseudoautosomal sequence on the Y chromosome  \citep{Graves1995TheGenes}. Perhaps we are seeing the influence of the amount of time each intron spent in the PAR. 
+
+The time frame of the translocation of \textit{Fxy} makes this hypothesis practically infeasible. The boundary of the PAR in humans is estimated to have shifted a mere 240bp due to attrition since divergence with other great apes, approximately 19MYA \citep{Mensah2014PseudoautosomalPopulation}. This makes the attrition of greater than 120,000bp of the \textit{M. musculus} Y chromosome in the 2-3 million years (MY) since divergence with \textit{M. spretus} extremely unlikely \citep{Huang2005HowMammals}. 
+
+Ultimately, this result appears to be confounded by the length of the introns. The X-specific introns have a mean length of $\sim28,000$, an order of magnitude larger than the PAR located introns, which have a mean length of $\sim2,300$. The power of a hypothesis test is the probability of the test correcting rejecting the null hypothesis. The power of the EOP test is affected by the number of substitution events that distinguish the sequences in an alignment. A longer alignment is more likely to have more substitution events and thus increase the power of the test. Therefore, it seems most likely that this result simply reflects the relative power of each test, in turn, the length of the alignments. 
+
+\section{Is the Human genome at equilibrium?}
+
+I now turn my attention to the evolution of the human genome. Unlike the application to empirical controls, there was no expectation of the level or form of mutation disequilibrium. 
+
+\subsubsection{There is substantial evidence for the existence of disequilibrium in the human genome}
+
+I estimated the proportion of the chromosome which was in disequilibrium to be $\sim50\%$ for intronic sequence and $\sim68\%$ for CDS (Section \ref{Human:TOE}). Acknowledging Simpson's paradox, these results strongly suggest the existence of disequilibrium in more than half of the examined sequences. What these results do not guarantee is that that the disequilibrium is a consequence entirely of changes to mutagenesis. In fact, for the CDS result, I expect that the level of disequilibrium is influenced by selection. However, I can potentially rule it out as a major factor in the intronic sequences. 
+
+The determination that selection is operating is often based on variability and rates of evolution (ref). The underlying premise of that work is often that the neutral rate is uniform (ref). The challenge to that is the strong evidence that mutagenesis is not uniform (ref). As a consequence, those conclusions are in doubt, until we have a clearer understanding of what the true baseline of neutral processes look like. What this means is not that everything is neutral, just that until demonstrated otherwise, we cannot establish whether it is neutral or adaptive. 
+
+It seems more likely that most genomic sequence, even within introns or between genes, is not functional. The demonstrated abundance of functional elements outside of protein coding sequences is low \citep{Graur2013OnENCODE} and the average length of protein binding motifs is approximately 10nt \citep{Stewart2012WhyLong}, a minor proportion of the typical length of an intron, $\sim7,000$bp \citep{10.1093/database/baw153}. These observations are not definitive, but they argue against the abundance of natural selection being the force behind these transitions. 
+
+In light of the previous arguments, it is plausible that the level of disequilibrium in the intronic sequences is largely due to changes to mutagenesis. 
+
+The estimate of the proportion of the CDS data in disequilibrium may be imprecise due to underlying differences between each gene. An assumption of the approach of \cite{Storey2003StatisticalStudies} is that each data point is a result from data drawn from the same underlying distribution, in which case, you can expect that the $p$-values are uniformly distributed. When you are not drawing randomly from the same distribution, even when the null is true, that expectation is not met. This is the case for the CDS analysis, where the data generated under the null hypothesis does not fall on the diagonal line (Figure \ref{Human:TOE}), illustrating the impact of differences such as the length of alignment or rate of evolution. The properties of the estimate are not entirely understood as a consequence, however, the departure from theory is small enough that there is still something to be gained from this data. There is this way to determine what the correct proportion is. This would be to randomly draw from the true negative and true positives in different proportions and try to solve for the observed fraction. 
+
+\subsubsection{The magnitude of disequilibrium is heterogeneous along a chromosome }
+
+The $\delta_\nabla$ statistic provides and understanding to the spatial organisation of disequilibrium. The distribution of $\delta_\nabla$ along human Chromosome 1 shows that the magnitude of disequilibrium is heterogeneous (Figure \ref{fig:primate:dconv-manhattan}). There are clear regions where the average magnitude of disequilibrium is higher than others, this is illustrated best by looking at the first 50M section of introns vs the next 50M section. This distribution is not seen in any \textit{D. melanogaster} or \textit{D. simulans} chromosome (Figure \ref{fig:drosophila_d-conv_manhattan})
+
+
+The magnitude of disequilibrium correlated with the level of CpG dinucleotide. 
+
+
+The magnitude of disequilibrium is heterogeneous along a chromosome. Figure \ref{fig:primate:dconv-manhattan} shows $\hat \delta_\nabla$ plotted against the coordinate of the gene on the chromosome for both intronic and CDS.  Interestingly, the overall trend of $\hat \delta_\nabla$ is mirrored between the sequence types. 
+
+
+
+Is this difference in magnitude simply due to the intrinsic differences in the rate of evolution across the genome. 
+
+Given the difference in the process, this is likely not the case. 
+
+
+\section{The role of purifying selection in influencing mutation disequilibrium}
+
+
+
+If there is strong purifying selection operating on a gene, then you expect a slower rate of evolution. 
+
 
 The X chromosome in drosophila versus its autosomes. 
 
@@ -83,11 +141,11 @@ Intron vs 3rd codon position in primates.
 
 \section{The Evolution of mutation}
 
-The existence of mutation disequilibrium in \textit{D. melanogaster} must been interpreted alongside the theory of evolution of mutation as it unifies ideas of mutation, selection and drift \citep{Lynch2008TheEvolution., Lynch2010EvolutionRate}. The theory proposed by \cite{Lynch2008TheEvolution.} states that mutation rates reflects selection operating to lower the mutation rate, but ultimately being opposed by random genetic drift \citep{Lynch2010EvolutionRate}. To be greater than the power of random genetic drift and thus pose a selective advantage, an antimutator allele must reduce the genome-wide deleterious mutation rate considerably \citep{Lynch2008TheEvolution., Lynch2010EvolutionRate}. The loss of key methylation machinery in \textit{D. melanogaster} has thus overcome a substantial barrier on the lower bound of the mutation rate. 
+The existence of mutation disequilibrium in \textit{D. melanogaster} must be interpreted alongside the theory of evolution of mutation as it unifies ideas of mutation, selection and drift \citep{Lynch2008TheEvolution., Lynch2010EvolutionRate}. The theory proposed by \cite{Lynch2008TheEvolution.} states that mutation rates reflects selection operating to lower the mutation rate, but ultimately being opposed by random genetic drift \citep{Lynch2010EvolutionRate}. To be greater than the power of random genetic drift and thus pose a selective advantage, an antimutator allele must reduce the genome-wide deleterious mutation rate considerably \citep{Lynch2008TheEvolution., Lynch2010EvolutionRate}. The loss of key methylation machinery in \textit{D. melanogaster} has thus overcome a substantial barrier on the lower bound of the mutation rate. 
 
 The recent evolution of an antimutator in \textit{D. melanogaster} is reflected in the results of the TOE. The level of mutation disequilibrium in \textit{D. melanogaster} far exceed that of its sister taxa. It appears that a change in mutation is followed by an elevation in mutation disequilibrium, as the lineage attains a new equilibrium. Critically, this existence of disequilibrium can be detected by the TOE. Assuming the disequilibrium in \textit{D. melanogaster} is caused by the recent evolution of mutation, application of the TOE across the tree of life will help characterise how often mutators evolve. 
 
-\section{Is the Human genome at equilibrium?}
+
 
 \section{Future Directions}
 
@@ -103,6 +161,12 @@ The development of a method of visualising the direction of compositional change
 \subsection{On a gene level}
 
 The ability to tell whether positive selection is operating on a gene?
+If there is really strong positive Darwinian selection, then the rate of evolution is faster than the neutral rate. So paradoxically, really strong selection for change, will lose non-stationarity because it will evolve to its equilibrium quicker. This is only if you imagine that the full state space is obtainable. This is a question and not something that I can answer with the current tools presented in this thesis. 
+
+What is the interplay between between selection and mutation. There is a new mutation selection balance, 
+
+The probability that an allele is going to be fixed is its frequency. 
+
 
 Detecting horizontal gene transfer. 
 
@@ -110,4 +174,4 @@ Analysing the SARS-CoV-2 genome
 
 \section{Conclusions}
 
-Significance and big picture overview of the results.
+Significance and big picture overview of the results
