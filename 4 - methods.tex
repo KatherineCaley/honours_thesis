@@ -52,7 +52,7 @@ ML is a powerful framework for determining whether there is significant improvem
 
 A likelihood ratio test (LRT) is a method of comparing nested models. The LRT process is described in Figure \ref{fig:lrt}. An LRT is a test of whether additional components unique to the alternate model cause a significant improvement in the description of the data. Practically, this involves comparing likelihoods between models. The log-likelihood ($\ln\mathcal{L}$) for each model is obtained via fitting. The likelihood ratio (LR), is the ratio of the $\ln\mathcal{L}$ of the two models:
 $$\mathrm{LR} = 2(\ln \mathcal{L}_{alt} -  \ln \mathcal{L}_{null}).$$
-If the null model is appropriate and the length of the alignment is adequate, the LRT statistic will be $\chi^2_{df}$ distributed with degrees freedom (df) equal to the difference in the number of free parameters between the models \citep{Lindgren1993StatisticalTheory, Silvey1975StatisticalInference, Kendall1979The2}.
+If the null model is appropriate and the length of the alignment is adequate, the LRT statistic will be $\chi^2_{df}$ distributed with degrees freedom (df) equal to the difference in the number of free parameters between the models \citep{Lindgren1993StatisticalTheory, Silvey1975StatisticalInference, Kendall1979TheStatistics}.
 
 \input{figures/diagrams/LRT}
 
