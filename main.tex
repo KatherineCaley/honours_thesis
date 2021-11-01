@@ -5,8 +5,8 @@
 \renewcommand{\thepage}{\roman{page}}	
 
 
-\title{Thesis Draft 1}
-\author{Katherine Caley}
+\title{Quantifying the disequilibrium of DNA sequence evolution}
+\author{Katherine Elisabeth Caley}
 \date{}
 
 % margins
@@ -88,13 +88,15 @@
 
 \begin{document}
 %TC:ignore
-\maketitle
+\input{title}
 
 \newpage
 
 \input{2 - abstract}
 
 \newpage
+
+\input{declaration}
 
 \tableofcontents
 
@@ -110,7 +112,9 @@
 
 \renewcommand{\thepage}{\arabic{page}}	
 
+%TC:endignore
 \input{3 - introduction}
+%TC:ignore
 
 \newpage
 
@@ -118,8 +122,9 @@
 
 \newpage
 
-
+%TC:endignore
 \input{5 - results}
+%TC:ignore
 
 %TC:endignore
 \input{6 - discussion}
