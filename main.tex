@@ -20,7 +20,7 @@
 % colours
 \usepackage{xcolor} 
 
-% no hyphenation
+% no hyphenation and no justification
 \usepackage[none]{hyphenat}
 \sloppy
 
@@ -32,6 +32,9 @@
 
 % bolding figure captions 
 \usepackage[labelfont=bf]{caption}
+
+% making math symbols larger 
+\usepackage{relsize}
 
 % check marks 
 \usepackage{tikz}
@@ -46,26 +49,18 @@
 \usepackage{setspace}
 \doublespacing
 
-% Change to this when printing out 
-% \setstretch{2.8} 
-
 % control bolding in table of contents 
 \usepackage[titles]{tocloft}
-% \renewcommand{\cftchapfont}{\bfseries}
-% \renewcommand{\cftsecfont}{\bfseries}
 
-% for formatting chapter titles
+% Chapter format
 \usepackage{titlesec}
-
-% chapters
 \titleformat{\chapter}[display]{\Huge}{\color{MidnightBlue}\raggedleft{Chapter \thechapter}}{10pt}{\titlerule}
 
 
-% reference
+% Referencing
 \usepackage{natbib}
 
 % cross referencing   
-% \usepackage{nameref}
 \usepackage{hyperref}
 \hypersetup{
     colorlinks,
@@ -76,27 +71,31 @@
 }
 
 % glossaries 
-%TC:ignore
 \usepackage[toc]{glossaries}
 \usepackage[stylemods=longextra]{glossaries-extra}
 \setglossarystyle{longragged3colheader}
 
 \input{glossary}
 
-% change the glossary style 
-
-
 \begin{document}
-%TC:ignore
+
 \input{title}
+
+\newpage
+
+\newpage
+
+\input{declaration}
+
+\newpage
+
+\input{acknowledgements}
 
 \newpage
 
 \input{2 - abstract}
 
 \newpage
-
-\input{declaration}
 
 \tableofcontents
 
@@ -112,9 +111,7 @@
 
 \renewcommand{\thepage}{\arabic{page}}	
 
-%TC:endignore
 \input{3 - introduction}
-%TC:ignore
 
 \newpage
 
@@ -122,22 +119,15 @@
 
 \newpage
 
-%TC:endignore
 \input{5 - results}
-%TC:ignore
 
-%TC:endignore
 \input{6 - discussion}
-%TC:ignore
-
-
-%TC:ignore
-\input{appendices}
 
 % set the bibliography as genetics style
 \bibliographystyle{geneticsstyle}
 \addcontentsline{toc}{chapter}{Bibliography}
-\bibliography{references, references_ext}
+\bibliography{references_it, references_ext}
 
-%TC:endignore
+\input{appendices}
+
 \end{document}
